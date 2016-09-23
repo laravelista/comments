@@ -45677,6 +45677,9 @@ var Comment = React.createClass({
         var rawMarkup = md.render(this.state.comment);
         return { __html: rawMarkup };
     },
+    _handleDelete: function _handleDelete() {
+        this.props.onCommentDelete(this.props.comment);
+    },
     _handleEdit: function _handleEdit() {
         this.setState({
             type: 'edit'
@@ -45720,7 +45723,7 @@ var Comment = React.createClass({
 
         var delete_button = React.createElement(
             'button',
-            { className: 'btn btn-xs btn-danger' },
+            { onClick: this._handleDelete, className: 'btn btn-xs btn-danger' },
             'Delete'
         );
 
@@ -45876,12 +45879,31 @@ var CommentBox = React.createClass({
             }.bind(this)
         });
     },
+    _handleCommentDelete: function _handleCommentDelete(comment) {
+        var url = '/api/v1/comments/' + comment.id;
+        $.ajax({
+            url: url,
+            method: 'DELETE',
+            success: function (data) {
+                this.loadCommentsFromServer();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(url, status, err.toString());
+            }.bind(this)
+        });
+    },
     render: function render() {
         return React.createElement(
             'div',
             null,
-            React.createElement(CommentList, { user: this.state.user, onCommentUpdate: this._handleCommentUpdate, comments: this.state.comments }),
-            React.createElement(CommentForm, { user: this.state.user, onCommentSubmit: this._handleCommentSubmit })
+            React.createElement(CommentList, {
+                user: this.state.user,
+                onCommentUpdate: this._handleCommentUpdate,
+                onCommentDelete: this._handleCommentDelete,
+                comments: this.state.comments }),
+            React.createElement(CommentForm, {
+                user: this.state.user,
+                onCommentSubmit: this._handleCommentSubmit })
         );
     }
 });
@@ -45989,11 +46011,26 @@ var CommentList = React.createClass({
     _handleCommentUpdate: function _handleCommentUpdate(comment) {
         this.props.onCommentUpdate(comment);
     },
+    _handleCommentDelete: function _handleCommentDelete(comment) {
+        this.props.onCommentDelete(comment);
+    },
     render: function render() {
         var that = this;
         var comments = this.props.comments.map(function (comment, index) {
-            return React.createElement(Comment, { user: that.props.user, onCommentUpdate: that._handleCommentUpdate, comment: comment, key: index });
+            return React.createElement(Comment, {
+                user: that.props.user,
+                onCommentDelete: that._handleCommentDelete,
+                onCommentUpdate: that._handleCommentUpdate,
+                comment: comment,
+                key: comment.id });
         });
+        if (comments.length == 0) {
+            comments = React.createElement(
+                'p',
+                { className: 'lead' },
+                'There are no comments yet. Be the first to comment.'
+            );
+        }
         return React.createElement(
             'div',
             null,

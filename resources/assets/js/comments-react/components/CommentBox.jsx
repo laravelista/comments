@@ -71,11 +71,30 @@ var CommentBox = React.createClass({
             }.bind(this)
         });
     },
+    _handleCommentDelete: function(comment) {
+        var url = '/api/v1/comments/' + comment.id;
+        $.ajax({
+            url: url,
+            method: 'DELETE',
+            success: function(data) {
+                this.loadCommentsFromServer();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(url, status, err.toString());
+            }.bind(this)
+        });
+    },
     render: function() {
         return (
             <div>
-                <CommentList user={this.state.user} onCommentUpdate={this._handleCommentUpdate} comments={this.state.comments} />
-                <CommentForm user={this.state.user} onCommentSubmit={this._handleCommentSubmit} />
+                <CommentList
+                    user={this.state.user}
+                    onCommentUpdate={this._handleCommentUpdate}
+                    onCommentDelete={this._handleCommentDelete}
+                    comments={this.state.comments} />
+                <CommentForm
+                    user={this.state.user}
+                    onCommentSubmit={this._handleCommentSubmit} />
             </div>
         );
     }

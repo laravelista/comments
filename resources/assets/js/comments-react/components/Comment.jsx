@@ -15,6 +15,9 @@ var Comment = React.createClass({
         var rawMarkup = md.render(this.state.comment);
         return { __html: rawMarkup };
     },
+    _handleDelete: function() {
+        this.props.onCommentDelete(this.props.comment);
+    },
     _handleEdit: function() {
         this.setState({
             type: 'edit'
@@ -55,7 +58,7 @@ var Comment = React.createClass({
         );
 
         var delete_button = (
-            <button className="btn btn-xs btn-danger">Delete</button>
+            <button onClick={this._handleDelete} className="btn btn-xs btn-danger">Delete</button>
         );
 
         if(this.props.user.id != this.props.comment.user.data.id) {
