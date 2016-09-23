@@ -18,6 +18,11 @@ class CommentController extends BaseController
     {
         $this->fractal = $fractal;
         $this->syndra = $syndra;
+
+        /**
+         * Comments Index can be viewed as guest.
+         */
+        $this->middleware('auth.comments', ['except' => ['index']]);
     }
 
     /**
@@ -26,7 +31,7 @@ class CommentController extends BaseController
      *
      * @return string
      */
-    public function getValidContentString()
+    protected function getValidContentTypeString()
     {
         return implode(',', config('comments.content'));
     }
@@ -36,11 +41,11 @@ class CommentController extends BaseController
      *
      * @return array
      */
-    public function getBasicRules()
+    protected function getBasicRules()
     {
         return [
-            'content' => 'required|string|in:' . $this->getValidContentString(),
-            'id' => 'required|int|min:1'
+            'content_type' => 'required|string|in:' . $this->getValidContentTypeString(),
+            'content_id' => 'required|int|min:1'
         ];
     }
 
@@ -51,7 +56,7 @@ class CommentController extends BaseController
      * @param  array $additional_rules Request specific rules.
      * @return Validator
      */
-    public function baseValidate(array $data, array $additional_rules = [])
+    protected function baseValidate(array $data, array $additional_rules = [])
     {
         return Validator::make($data,
             array_merge($this->getBasicRules(), $additional_rules)
@@ -65,7 +70,7 @@ class CommentController extends BaseController
      * @param  int    $id      Model id
      * @return Illuminate\Database\Eloquent\Model
      */
-    public function getModel(string $content, int $id)
+    protected function getModel(string $content, int $id)
     {
         return $content::findOrFail($id);
     }
@@ -86,8 +91,8 @@ class CommentController extends BaseController
         }
 
         $model = $this->getModel(
-            $request->get('content'),
-            $request->get('id')
+            $request->get('content_type'),
+            $request->get('content_id')
         );
 
         $resource = new Collection($model->comments, new CommentTransformer);
@@ -116,8 +121,8 @@ class CommentController extends BaseController
         }
 
         $model = $this->getModel(
-            $request->get('content'),
-            $request->get('id')
+            $request->get('content_type'),
+            $request->get('content_id')
         );
 
         $comment = new Comment;
@@ -138,7 +143,27 @@ class CommentController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator =  Validator::make($request->all(), [
+            'comment' => 'required|string'
+        ]);
+
+        if($validator->fails()) {
+            return $this->syndra->respondValidationError(
+                $validator->errors()->getMessages()
+            );
+        }
+
+        $comment = Comment::findOrFail($id);
+
+        // If the user is not the comment owner.
+        if(auth()->user()->id != $comment->user->id) {
+            return $this->syndra->respondForbidden();
+        }
+
+        $comment->comment = $request->get('comment');
+        $comment->save();
+
+        return $this->syndra->respondUpdated();
     }
 
     /**
@@ -149,6 +174,15 @@ class CommentController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+
+        // If the user is not the comment owner.
+        if(auth()->user()->id != $comment->user->id) {
+            return $this->syndra->respondForbidden();
+        }
+
+        $comment->delete();
+
+        return $this->syndra->respondOk();
     }
 }

@@ -11,17 +11,27 @@ class CommentsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-      $this->publishes([
-        __DIR__.'/../Database/Migrations' => database_path('migrations')
-      ], 'migrations');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'comments');
 
-      $this->publishes([
-          __DIR__.'/../Config/config.php' => config_path('comments.php'),
-      ], 'config');
+        $this->publishes([
+            __DIR__.'/../../resources/views' => resource_path('views/vendor/comments'),
+        ], 'views');
 
-      if (! $this->app->routesAreCached()) {
-        require __DIR__.'/../Http/routes.php';
-      }
+        $this->publishes([
+            __DIR__.'/../../public' => public_path('vendor/comments'),
+        ], 'public');
+
+        $this->publishes([
+            __DIR__.'/../Database/Migrations' => database_path('migrations')
+        ], 'migrations');
+
+        $this->publishes([
+            __DIR__.'/../Config/config.php' => config_path('comments.php'),
+        ], 'config');
+
+        if (! $this->app->routesAreCached()) {
+            require __DIR__.'/../Http/routes.php';
+        }
     }
 
     /**
