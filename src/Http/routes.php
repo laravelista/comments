@@ -8,6 +8,4 @@ Route::group([
     Route::resource('comments', 'CommentController', [
         'only' => ['index', 'store', 'update', 'destroy']
     ]);
-
-    Route::get('user', 'UserController@getAuthenticatedUser');
 });

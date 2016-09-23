@@ -6,7 +6,9 @@ use Laravelista\Comments\Comments\Comment;
 use League\Fractal\Manager;
 use Laravelista\Syndra\Syndra;
 use Laravelista\Comments\Comments\CommentTransformer;
+use Laravelista\Comments\Comments\UserTransformer;
 use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\Item;
 use Illuminate\Routing\Controller as BaseController;
 
 class CommentController extends BaseController
@@ -96,6 +98,17 @@ class CommentController extends BaseController
         );
 
         $resource = new Collection($model->comments, new CommentTransformer);
+        /**
+         * If user is logged in, add his data to meta.
+         */
+        if(auth()->check())
+        {
+            $user = new Item(auth()->user(), new UserTransformer);
+            $data = $this->fractal->createData($user)->toArray();
+            
+            $resource->setMetaValue('user', $data);
+        }
+
         $data = $this->fractal->createData($resource)->toArray();
 
         return $this->syndra->respond($data);

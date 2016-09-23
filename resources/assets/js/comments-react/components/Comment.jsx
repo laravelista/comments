@@ -49,10 +49,19 @@ var Comment = React.createClass({
                 <span dangerouslySetInnerHTML={this.rawMarkup()} />
             </p>
         );
-        
+
         var edit_button = (
             <button onClick={this._handleEdit} className="btn btn-xs btn-default">Edit</button>
         );
+
+        var delete_button = (
+            <button className="btn btn-xs btn-danger">Delete</button>
+        );
+
+        if(this.props.user.id != this.props.comment.user.data.id) {
+            edit_button = null;
+            delete_button = null;
+        }
 
         if(this.state.type == 'edit') {
             content = (
@@ -62,6 +71,17 @@ var Comment = React.createClass({
             edit_button = (
                 <button onClick={this._handleUpdate} className="btn btn-xs btn-primary">Update</button>
             );
+        }
+
+        var footer = (
+            <div className="panel-footer text-right">
+                {edit_button}
+                {delete_button}
+            </div>
+        );
+
+        if(edit_button == null && delete_button == null) {
+            footer = null;
         }
 
         return (
@@ -79,10 +99,7 @@ var Comment = React.createClass({
                         </div>
                     </div>
                 </div>
-                <div className="panel-footer text-right">
-                    {edit_button}
-                    <button className="btn btn-xs btn-danger">Delete</button>
-                </div>
+                {footer}
             </div>
         );
     }

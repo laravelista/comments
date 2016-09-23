@@ -9,7 +9,7 @@ var CommentList = React.createClass({
         var that = this;
         var comments = this.props.comments.map(function(comment, index) {
             return (
-                <Comment onCommentUpdate={that._handleCommentUpdate} comment={comment} key={index} />
+                <Comment user={that.props.user} onCommentUpdate={that._handleCommentUpdate} comment={comment} key={index} />
             );
         })
         return (

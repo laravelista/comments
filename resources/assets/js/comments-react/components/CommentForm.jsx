@@ -26,7 +26,7 @@ var CommentForm = React.createClass({
         });
     },
     render: function() {
-        return (
+        var form = (
             <form onSubmit={this._handleSubmit}>
                 <div className="panel panel-default">
                     <div className="panel-body">
@@ -38,6 +38,17 @@ var CommentForm = React.createClass({
                     </div>
                 </div>
             </form>
+        );
+
+        if(this.props.user.id == undefined) {
+            form = (
+                <p className="lead">You must <i>login</i> to post a comment.</p>
+            );
+        }
+        return (
+            <div>
+                {form}
+            </div>
         );
     }
 });

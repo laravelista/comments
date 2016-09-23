@@ -45718,6 +45718,17 @@ var Comment = React.createClass({
             'Edit'
         );
 
+        var delete_button = React.createElement(
+            'button',
+            { className: 'btn btn-xs btn-danger' },
+            'Delete'
+        );
+
+        if (this.props.user.id != this.props.comment.user.data.id) {
+            edit_button = null;
+            delete_button = null;
+        }
+
         if (this.state.type == 'edit') {
             content = React.createElement('textarea', { rows: '6', className: 'form-control', onChange: this._handleCommentChange, value: this.state.comment });
 
@@ -45726,6 +45737,17 @@ var Comment = React.createClass({
                 { onClick: this._handleUpdate, className: 'btn btn-xs btn-primary' },
                 'Update'
             );
+        }
+
+        var footer = React.createElement(
+            'div',
+            { className: 'panel-footer text-right' },
+            edit_button,
+            delete_button
+        );
+
+        if (edit_button == null && delete_button == null) {
+            footer = null;
         }
 
         return React.createElement(
@@ -45769,16 +45791,7 @@ var Comment = React.createClass({
                     )
                 )
             ),
-            React.createElement(
-                'div',
-                { className: 'panel-footer text-right' },
-                edit_button,
-                React.createElement(
-                    'button',
-                    { className: 'btn btn-xs btn-danger' },
-                    'Delete'
-                )
-            )
+            footer
         );
     }
 });
@@ -45798,32 +45811,41 @@ var CommentBox = React.createClass({
 
     getInitialState: function getInitialState() {
         return {
-            comments: []
+            comments: [],
+            user: {}
         };
     },
     componentDidMount: function componentDidMount() {
         this.loadCommentsFromServer();
     },
     loadCommentsFromServer: function loadCommentsFromServer() {
+        var url = '/api/v1/comments';
         $.ajax({
-            url: '/api/v1/comments',
+            url: url,
             data: {
                 content_type: this.props.content_type,
                 content_id: this.props.content_id
             },
             success: function (data) {
+                var user = this.state.user;
+                if (data.meta) {
+                    user = data.meta.user.data;
+                }
+
                 this.setState({
-                    comments: data.data
+                    comments: data.data,
+                    user: user
                 });
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error(this.state.url, status, err.toString());
+                console.error(url, status, err.toString());
             }.bind(this)
         });
     },
     _handleCommentSubmit: function _handleCommentSubmit(comment) {
+        var url = '/api/v1/comments';
         $.ajax({
-            url: '/api/v1/comments',
+            url: url,
             method: 'POST',
             data: {
                 content_type: this.props.content_type,
@@ -45834,13 +45856,14 @@ var CommentBox = React.createClass({
                 this.loadCommentsFromServer();
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error(this.state.url, status, err.toString());
+                console.error(url, status, err.toString());
             }.bind(this)
         });
     },
     _handleCommentUpdate: function _handleCommentUpdate(comment) {
+        var url = '/api/v1/comments/' + comment.comment_id;
         $.ajax({
-            url: '/api/v1/comments/' + comment.comment_id,
+            url: url,
             method: 'PUT',
             data: {
                 comment: comment.comment
@@ -45849,7 +45872,7 @@ var CommentBox = React.createClass({
                 // do nothing
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error(this.state.url, status, err.toString());
+                console.error(url, status, err.toString());
             }.bind(this)
         });
     },
@@ -45857,8 +45880,8 @@ var CommentBox = React.createClass({
         return React.createElement(
             'div',
             null,
-            React.createElement(CommentList, { onCommentUpdate: this._handleCommentUpdate, comments: this.state.comments }),
-            React.createElement(CommentForm, { onCommentSubmit: this._handleCommentSubmit })
+            React.createElement(CommentList, { user: this.state.user, onCommentUpdate: this._handleCommentUpdate, comments: this.state.comments }),
+            React.createElement(CommentForm, { user: this.state.user, onCommentSubmit: this._handleCommentSubmit })
         );
     }
 });
@@ -45898,7 +45921,7 @@ var CommentForm = React.createClass({
         });
     },
     render: function render() {
-        return React.createElement(
+        var form = React.createElement(
             'form',
             { onSubmit: this._handleSubmit },
             React.createElement(
@@ -45930,6 +45953,25 @@ var CommentForm = React.createClass({
                 )
             )
         );
+
+        if (this.props.user.id == undefined) {
+            form = React.createElement(
+                'p',
+                { className: 'lead' },
+                'You must ',
+                React.createElement(
+                    'i',
+                    null,
+                    'login'
+                ),
+                ' to post a comment.'
+            );
+        }
+        return React.createElement(
+            'div',
+            null,
+            form
+        );
     }
 });
 
@@ -45950,7 +45992,7 @@ var CommentList = React.createClass({
     render: function render() {
         var that = this;
         var comments = this.props.comments.map(function (comment, index) {
-            return React.createElement(Comment, { onCommentUpdate: that._handleCommentUpdate, comment: comment, key: index });
+            return React.createElement(Comment, { user: that.props.user, onCommentUpdate: that._handleCommentUpdate, comment: comment, key: index });
         });
         return React.createElement(
             'div',
