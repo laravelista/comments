@@ -1,0 +1,26 @@
+{
+    "name": "laravelista/comments",
+    "description": "Comments for Laravel.",
+    "keywords": ["laravel", "comments"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mario Bašić",
+            "email": "mario.basic@outlook.com"
+        }
+    ],
+    "require": {
+        "league/fractal": "^0.14.0",
+        "illuminate/support": "^5.2",
+        "illuminate/database": "^5.2",
+        "illuminate/routing": "^5.2",
+        "laravelista/syndra": "^1.2",
+        "illuminate/http": "^5.2",
+        "illuminate/validation": "^5.2"
+    },
+    "autoload": {
+      "psr-4": {
+        "Laravelista\\Comments\\": "src/"
+      }
+    }
+}
