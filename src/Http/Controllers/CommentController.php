@@ -10,6 +10,9 @@ use Laravelista\Comments\Comments\UserTransformer;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use Illuminate\Routing\Controller as BaseController;
+use Laravelista\Comments\Events\CommentWasPosted;
+use Laravelista\Comments\Events\CommentWasUpdated;
+use Laravelista\Comments\Events\CommentWasDeleted;
 
 class CommentController extends BaseController
 {
@@ -105,7 +108,7 @@ class CommentController extends BaseController
         {
             $user = new Item(auth()->user(), new UserTransformer);
             $data = $this->fractal->createData($user)->toArray();
-            
+
             $resource->setMetaValue('user', $data);
         }
 
@@ -144,6 +147,8 @@ class CommentController extends BaseController
         $comment->comment = $request->get('comment');
         $comment->save();
 
+        event(new CommentWasPosted($comment));
+
         return $this->syndra->respondCreated();
     }
 
@@ -176,6 +181,8 @@ class CommentController extends BaseController
         $comment->comment = $request->get('comment');
         $comment->save();
 
+        event(new CommentWasUpdated($comment));
+
         return $this->syndra->respondUpdated();
     }
 
@@ -195,6 +202,8 @@ class CommentController extends BaseController
         }
 
         $comment->delete();
+
+        event(new CommentWasDeleted($comment));
 
         return $this->syndra->respondOk();
     }

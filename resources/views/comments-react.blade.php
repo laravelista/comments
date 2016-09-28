@@ -9,5 +9,4 @@ window.Laravelista = {
 };
 </script>
 
-<link href="{{ asset('vendor/comments/css/comments-react.css') }}" rel="stylesheet">
 <script src="{{ asset('vendor/comments/js/comments-react.js') }}"></script>

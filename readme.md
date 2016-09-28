@@ -44,3 +44,11 @@ php artisan vendor:publish --provider="Laravelista\Comments\Providers\CommentsSe
 ```
 php artisan vendor:publish --provider="Laravelista\Comments\Providers\CommentsServiceProvider" --tag=public --force
 ```
+
+## Events
+
+This package fires events to let you easily hook into it.
+
+- `Laravelista\Comments\Events\CommentWasPosted` - this is where you would usually notify users who commented on the given model.
+- `Laravelista\Comments\Events\CommentWasUpdated`
+- `Laravelista\Comments\Events\CommentWasDeleted`

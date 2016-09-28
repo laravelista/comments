@@ -13,11 +13,13 @@
         "league/fractal": "^0.14.0",
         "illuminate/support": "^5.2",
         "illuminate/database": "^5.2",
+        "illuminate/http": "^5.2",
         "illuminate/routing": "^5.2",
         "illuminate/contracts": "^5.2",
-        "laravelista/syndra": "^1.2",
-        "illuminate/http": "^5.2",
-        "illuminate/validation": "^5.2"
+        "illuminate/queue": "^5.2",
+        "illuminate/config": "^5.2",
+        "illuminate/events": "^5.2",
+        "laravelista/syndra": "^1.2"
     },
     "autoload": {
       "psr-4": {
