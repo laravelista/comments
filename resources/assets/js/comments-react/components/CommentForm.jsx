@@ -42,7 +42,7 @@ var CommentForm = React.createClass({
 
         if(this.props.user.id == undefined) {
             form = (
-                <p className="lead">You must <i>login</i> to post a comment.</p>
+                <p className="lead">You must <a href={this.props.login_path}>login</a> to post a comment.</p>
             );
         }
         return (

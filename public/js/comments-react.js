@@ -45651,9 +45651,9 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var CommentBox = require('./components/CommentBox.jsx');
 
-window.Laravelista = window.Laravelista || { content_type: null, content_id: null };
+window.Laravelista = window.Laravelista || { content_type: null, content_id: null, login_path: '/login' };
 
-ReactDOM.render(React.createElement(CommentBox, { content_type: Laravelista.content_type, content_id: Laravelista.content_id }), document.getElementById('laravelista-comments'));
+ReactDOM.render(React.createElement(CommentBox, { content_type: Laravelista.content_type, content_id: Laravelista.content_id, login_path: Laravelista.login_path }), document.getElementById('laravelista-comments'));
 
 },{"./components/CommentBox.jsx":241,"react":178,"react-dom":34}],240:[function(require,module,exports){
 'use strict';
@@ -45903,6 +45903,7 @@ var CommentBox = React.createClass({
                 comments: this.state.comments }),
             React.createElement(CommentForm, {
                 user: this.state.user,
+                login_path: this.props.login_path,
                 onCommentSubmit: this._handleCommentSubmit })
         );
     }
@@ -45982,8 +45983,8 @@ var CommentForm = React.createClass({
                 { className: 'lead' },
                 'You must ',
                 React.createElement(
-                    'i',
-                    null,
+                    'a',
+                    { href: this.props.login_path },
                     'login'
                 ),
                 ' to post a comment.'

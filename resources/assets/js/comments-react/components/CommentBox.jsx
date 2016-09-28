@@ -94,6 +94,7 @@ var CommentBox = React.createClass({
                     comments={this.state.comments} />
                 <CommentForm
                     user={this.state.user}
+                    login_path={this.props.login_path}
                     onCommentSubmit={this._handleCommentSubmit} />
             </div>
         );

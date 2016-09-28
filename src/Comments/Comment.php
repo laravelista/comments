@@ -9,7 +9,7 @@ class Comment extends Model
 
     public function user()
     {
-        return $this->belongsTo(config('auth.providers.users.model'));
+        return $this->belongsTo(config('comments.user_model'));
     }
 
     public function content()
