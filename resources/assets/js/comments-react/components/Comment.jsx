@@ -1,29 +1,46 @@
-var React = require('react');
-var md5 = require('md5');
-var Remarkable = require('remarkable');
-var md = new Remarkable();
-var moment = require('moment')
+import React, { Component } from 'react';
+import md5 from 'md5';
+import Remarkable from 'remarkable';
+import moment from 'moment';
 
-var Comment = React.createClass({
-    getInitialState: function() {
-        return {
+const md = new Remarkable();
+
+class Comment extends Component
+{
+    constructor() {
+        super();
+
+        this.state = {
             type: 'read',
-            comment: this.props.comment.comment
+            comment: ''
         };
-    },
-    rawMarkup: function() {
-        var rawMarkup = md.render(this.state.comment);
-        return { __html: rawMarkup };
-    },
-    _handleDelete: function() {
+    }
+
+    componentDidMount() {
+        this.setState({
+            comment: this.props.comment.comment
+        });
+    }
+
+    rawMarkup() {
+        let rawMarkup = md.render(this.state.comment);
+
+        return {
+            __html: rawMarkup
+        };
+    }
+
+    handleDelete() {
         this.props.onCommentDelete(this.props.comment);
-    },
-    _handleEdit: function() {
+    }
+
+    handleEdit() {
         this.setState({
             type: 'edit'
         });
-    },
-    _handleUpdate: function() {
+    }
+
+    handleUpdate() {
         this.setState({
             type: 'read'
         });
@@ -37,28 +54,30 @@ var Comment = React.createClass({
             comment: this.state.comment,
             comment_id: this.props.comment.id
         });
-    },
-    _handleCommentChange: function(e) {
+    }
+
+    handleCommentChange(e) {
         this.setState({
             comment: e.target.value
         });
-    },
-    render: function() {
-        var email_hash = "//www.gravatar.com/avatar/" + md5(this.props.comment.user.data.email) + ".jpg?s=60";
-        var datetime = moment(this.props.comment.created_at, 'YYYY-MM-DD HH:mm:ss').fromNow();
+    }
 
-        var content = (
+    render() {
+        let email_hash = "//www.gravatar.com/avatar/" + md5(this.props.comment.user.data.email) + ".jpg?s=60";
+        let datetime = moment(this.props.comment.created_at, 'YYYY-MM-DD HH:mm:ss').fromNow();
+
+        let content = (
             <p>
                 <span dangerouslySetInnerHTML={this.rawMarkup()} />
             </p>
         );
 
-        var edit_button = (
-            <button onClick={this._handleEdit} className="btn btn-xs btn-default">Edit</button>
+        let edit_button = (
+            <button onClick={this.handleEdit.bind(this)} className="btn btn-xs btn-default">Edit</button>
         );
 
-        var delete_button = (
-            <button onClick={this._handleDelete} className="btn btn-xs btn-danger">Delete</button>
+        let delete_button = (
+            <button onClick={this.handleDelete.bind(this)} className="btn btn-xs btn-danger">Delete</button>
         );
 
         if(this.props.user.id != this.props.comment.user.data.id) {
@@ -68,15 +87,15 @@ var Comment = React.createClass({
 
         if(this.state.type == 'edit') {
             content = (
-                <textarea rows="6" className="form-control" onChange={this._handleCommentChange} value={this.state.comment}></textarea>
+                <textarea rows="6" className="form-control" onChange={this.handleCommentChange.bind(this)} value={this.state.comment}></textarea>
             );
 
             edit_button = (
-                <button onClick={this._handleUpdate} className="btn btn-xs btn-primary">Update</button>
+                <button onClick={this.handleUpdate.bind(this)} className="btn btn-xs btn-primary">Update</button>
             );
         }
 
-        var footer = (
+        let footer = (
             <div className="panel-footer text-right">
                 {edit_button}
                 {delete_button}
@@ -106,6 +125,6 @@ var Comment = React.createClass({
             </div>
         );
     }
-})
+}
 
-module.exports = Comment;
+export default Comment;

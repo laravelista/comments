@@ -1,104 +1,111 @@
-var React = require('react');
-var $ = require('jquery');
-var CommentList = require('./CommentList.jsx');
-var CommentForm = require('./CommentForm.jsx');
+import request from 'superagent';
+import React, { Component } from 'react';
+import CommentList from './CommentList.jsx';
+import CommentForm from './CommentForm.jsx';
+import handleAjaxError from '../helpers/handleAjaxError';
 
-var CommentBox = React.createClass({
-    getInitialState: function() {
-        return {
+class CommentBox extends Component {
+
+    constructor() {
+        super();
+
+        this.url = '/api/v1/comments/';
+
+        this.state = {
             comments: [],
             user: {}
         };
-    },
-    componentDidMount: function() {
-        this.loadCommentsFromServer();
-    },
-    loadCommentsFromServer: function() {
-        var url = '/api/v1/comments';
-        $.ajax({
-            url: url,
-            data: {
+    }
+
+    loadCommentsFromServer() {
+        request
+            .get(this.url)
+            .query({
                 content_type: this.props.content_type,
                 content_id: this.props.content_id
-            },
-            success: function(data) {
-                var user = this.state.user;
-                if(data.meta) {
-                    user = data.meta.user.data;
+            })
+            .on('error', (error, response) => {
+                handleAjaxError(this.url, error, response);
+            })
+            .end((error, response) => {
+                let user = this.state.user;
+
+                if(response.body.meta) {
+                    user = response.body.meta.user.data;
                 }
 
                 this.setState({
-                    comments: data.data,
+                    comments: response.body.data,
                     user: user
                 });
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(url, status, err.toString());
-            }.bind(this)
-        });
-    },
-    _handleCommentSubmit: function(comment) {
-        var url = '/api/v1/comments';
-        $.ajax({
-            url: url,
-            method: 'POST',
-            data: {
+            });
+    }
+
+    componentDidMount() {
+        this.loadCommentsFromServer();
+    }
+
+    handleCommentSubmit(comment) {
+        request
+            .post(this.url)
+            .send({
                 content_type: this.props.content_type,
                 content_id: this.props.content_id,
                 comment: comment
-            },
-            success: function(data) {
+            })
+            .on('error', (error, response) => {
+                handleAjaxError(this.url, error, response);
+            })
+            .end((error, response) => {
                 this.loadCommentsFromServer();
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(url, status, err.toString());
-            }.bind(this)
-        });
-    },
-    _handleCommentUpdate: function(comment) {
-        var url = '/api/v1/comments/' + comment.comment_id;
-        $.ajax({
-            url: url,
-            method: 'PUT',
-            data: {
+            });
+    }
+
+    handleCommentUpdate(comment) {
+        let url = this.url + comment.comment_id;
+
+        request
+            .put(url)
+            .send({
                 comment: comment.comment
-            },
-            success: function(data) {
-                // do nothing
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(url, status, err.toString());
-            }.bind(this)
-        });
-    },
-    _handleCommentDelete: function(comment) {
-        var url = '/api/v1/comments/' + comment.id;
-        $.ajax({
-            url: url,
-            method: 'DELETE',
-            success: function(data) {
+            })
+            .on('error', (error, response) => {
+                handleAjaxError(url, error, response);
+            })
+            .end((error, response) => {
+
+            });
+    }
+
+    handleCommentDelete(comment) {
+        let url = this.url + comment.id;
+
+        request
+            .delete(url)
+            .on('error', (error, response) => {
+                handleAjaxError(url, error, response);
+            })
+            .end((error, response) => {
                 this.loadCommentsFromServer();
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(url, status, err.toString());
-            }.bind(this)
-        });
-    },
-    render: function() {
+            });
+    }
+
+    render() {
         return (
             <div>
                 <CommentList
                     user={this.state.user}
-                    onCommentUpdate={this._handleCommentUpdate}
-                    onCommentDelete={this._handleCommentDelete}
+                    onCommentUpdate={this.handleCommentUpdate.bind(this)}
+                    onCommentDelete={this.handleCommentDelete.bind(this)}
                     comments={this.state.comments} />
                 <CommentForm
                     user={this.state.user}
                     login_path={this.props.login_path}
-                    onCommentSubmit={this._handleCommentSubmit} />
+                    onCommentSubmit={this.handleCommentSubmit.bind(this)} />
             </div>
         );
     }
-})
 
-module.exports = CommentBox;
+}
+
+export default CommentBox;

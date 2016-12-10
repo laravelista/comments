@@ -1,5 +1,7 @@
 var elixir = require('laravel-elixir');
 
+require('laravel-elixir-webpack-react');
+
 elixir(function (mix) {
-    mix.browserify('comments-react/app.js', 'public/js/comments-react.js');
+    mix.webpack('comments-react/app.js', 'public/js/comments-react.js');
 });

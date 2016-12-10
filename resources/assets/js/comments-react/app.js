@@ -1,6 +1,6 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var CommentBox = require('./components/CommentBox.jsx');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import CommentBox from './components/CommentBox.jsx';
 
 window.Laravelista = window.Laravelista || {content_type: null, content_id: null, login_path: '/login'};
 

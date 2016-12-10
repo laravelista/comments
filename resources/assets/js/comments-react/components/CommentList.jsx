@@ -1,25 +1,28 @@
-var React = require('react');
-var Comment = require('./Comment.jsx');
+import React, { Component } from 'react';
+import Comment from './Comment.jsx';
 
-var CommentList = React.createClass({
-    _handleCommentUpdate: function(comment) {
+class CommentList extends Component
+{
+    handleCommentUpdate(comment) {
         this.props.onCommentUpdate(comment);
-    },
-    _handleCommentDelete: function(comment) {
+    }
+
+    handleCommentDelete(comment) {
         this.props.onCommentDelete(comment);
-    },
-    render: function() {
-        var that = this;
-        var comments = this.props.comments.map(function(comment, index) {
+    }
+
+    render() {
+        let comments = this.props.comments.map((comment, index) => {
             return (
                 <Comment
-                    user={that.props.user}
-                    onCommentDelete={that._handleCommentDelete}
-                    onCommentUpdate={that._handleCommentUpdate}
+                    user={this.props.user}
+                    onCommentDelete={this.handleCommentDelete.bind(this)}
+                    onCommentUpdate={this.handleCommentUpdate.bind(this)}
                     comment={comment}
                     key={comment.id} />
             );
-        })
+        });
+
         if(comments.length == 0) {
             comments = (
                 <p className="lead">There are no comments yet. Be the first to comment.</p>
@@ -31,6 +34,7 @@ var CommentList = React.createClass({
             </div>
         );
     }
-})
 
-module.exports = CommentList;
+}
+
+export default CommentList;

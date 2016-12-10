@@ -1,17 +1,22 @@
-var React = require('react');
+import React, { Component } from 'react';
 
-var CommentForm = React.createClass({
-    getInitialState: function() {
-        return {
+class CommentForm extends Component
+{
+    constructor() {
+        super();
+
+        this.state = {
             comment: ''
         };
-    },
-    _handleCommentChange: function(e) {
+    }
+
+    handleCommentChange(e) {
         this.setState({
             comment: e.target.value
         });
-    },
-    _handleSubmit: function(e) {
+    }
+
+    handleSubmit(e) {
         e.preventDefault();
 
         var comment = this.state.comment.trim();
@@ -24,13 +29,14 @@ var CommentForm = React.createClass({
         this.setState({
             comment: ''
         });
-    },
-    render: function() {
+    }
+
+    render() {
         var form = (
-            <form onSubmit={this._handleSubmit}>
+            <form onSubmit={this.handleSubmit.bind(this)}>
                 <div className="panel panel-default">
                     <div className="panel-body">
-                        <textarea rows="6" value={this.state.comment} onChange={this._handleCommentChange} className="form-control" placeholder="Enter your comment here..."></textarea>
+                        <textarea rows="6" value={this.state.comment} onChange={this.handleCommentChange.bind(this)} className="form-control" placeholder="Enter your comment here..."></textarea>
                         <span className="help-block"><a target="_blank" href="https://help.github.com/articles/basic-writing-and-formatting-syntax/">Markdown</a> cheatsheet.</span>
                     </div>
                     <div className="panel-footer">
@@ -51,6 +57,7 @@ var CommentForm = React.createClass({
             </div>
         );
     }
-});
 
-module.exports = CommentForm;
+}
+
+export default CommentForm;
