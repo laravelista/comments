@@ -25,7 +25,7 @@ class Comment extends Model
      *
      * @return Collection
      */
-    public function getUsersWhoCommented(): Collection
+    public function getUsersWhoCommented()
     {
         $content_id = $this->content->id;
         $content_type = $this->content()->first()->getMorphClass();

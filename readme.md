@@ -51,6 +51,10 @@ I plan to expand this chapter with more tutorials and articles. If you write som
 
 - [Laravelista: Comments preview](https://laravelista.com/posts/comments-preview)
 
+## Requirements
+
+- PHP version `>=5.6.4`
+
 ## Installation
 
 From the command line:
@@ -74,6 +78,14 @@ Add `auth.comments` middleware in `app/Http/Kernel.php` under `$routeMiddleware`
 protected $routeMiddleware = [
     ...,
     'auth.comments' => \Laravelista\Comments\Http\Middleware\Authenticate::class,
+];
+```
+
+And finally, append `api/v1/*` in `app/Http/Middleware/VerifyCsrfToken.php` so that it looks like this:
+
+```php
+protected $except = [
+    'api/v1/*'
 ];
 ```
 

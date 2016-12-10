@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "php": ">=5.6.4",
         "league/fractal": "^0.14.0",
         "illuminate/support": "^5.2",
         "illuminate/database": "^5.2",

@@ -75,7 +75,7 @@ class CommentController extends BaseController
      * @param  int    $id      Model id
      * @return Illuminate\Database\Eloquent\Model
      */
-    protected function getModel(string $content, int $id)
+    protected function getModel($content, $id)
     {
         return $content::findOrFail($id);
     }
