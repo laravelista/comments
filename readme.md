@@ -99,11 +99,22 @@ php artisan vendor:publish --provider="Laravelista\Comments\Providers\CommentsSe
 php artisan migrate
 ```
 
+### Add a relationship to your User model
+
+First, add this code to your User model so that you can retrieve the comments for a user:
+
+```php
+public function comments()
+{
+    return $this->hasMany(\Laravelista\Comments\Comments\Comment::class);
+}
+```
+
 ### Apply Comments trait to models
 
 This is the first step to enabling comments on a model. Add trait `Comments` to any model that you want to be able to comment upon or get comments for.
 
-First, add `Comments` trait to your User model so that you can retrieve the comments for a user. Then add the `Comments` trait to the model for which you want to enable comments for:
+Add the `Comments` trait to the model for which you want to enable comments for:
 
 ```php
 use Laravelista\Comments\Comments\Traits\Comments;
