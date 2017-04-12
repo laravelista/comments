@@ -9,7 +9,7 @@ class CommentBox extends Component {
     constructor() {
         super();
 
-        this.url = '/api/v1/comments/';
+        this.url = '/api/v1/comments';
 
         this.state = {
             comments: [],
@@ -62,7 +62,7 @@ class CommentBox extends Component {
     }
 
     handleCommentUpdate(comment) {
-        let url = this.url + comment.comment_id;
+        let url = this.url + '/' + comment.comment_id;
 
         request
             .put(url)
@@ -78,7 +78,7 @@ class CommentBox extends Component {
     }
 
     handleCommentDelete(comment) {
-        let url = this.url + comment.id;
+        let url = this.url + '/' + comment.id;
 
         request
             .delete(url)
