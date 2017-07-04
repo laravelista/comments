@@ -63,7 +63,7 @@ class Comment extends Component
     }
 
     render() {
-        let email_hash = "//www.gravatar.com/avatar/" + md5(this.props.comment.user.data.email) + ".jpg?s=60";
+        let email_hash = "//www.gravatar.com/avatar/" + this.props.comment.user.data.email_hash + ".jpg?s=60";
         let datetime = moment(this.props.comment.created_at, 'YYYY-MM-DD HH:mm:ss').fromNow();
 
         let content = (
