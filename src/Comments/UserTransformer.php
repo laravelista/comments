@@ -10,7 +10,7 @@ class UserTransformer extends TransformerAbstract
         return [
             'id' => (int) $user->id,
             'name' => $user->name,
-            'email_hash' => md5($user->email)
+            'email_hash' => md5(strtolower(trim($user->email))),
         ];
     }
 
