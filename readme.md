@@ -18,9 +18,9 @@ All comments are stored in a single table with a polymorphic relation for conten
 
 - [x] Create a comment
 - [x] Delete a comment
-- [] Edit a Comment
-- [] Reply to a comment
-- [] Events
+- [ ] Edit a Comment
+- [ ] Reply to a comment
+- [ ] Events
 
 ### Screenshots
 
