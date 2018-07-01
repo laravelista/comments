@@ -19,12 +19,12 @@ All comments are stored in a single table with a polymorphic relation for conten
 - [x] View comments
 - [x] Create comment
 - [x] Delete comment
-- [x] Edit Comment
+- [x] Edit comment
 - [x] Reply to comment
 - [x] Authorization rules
 - [x] Support localization
 - [x] View customization
-- [ ] Dispatch Events
+- [x] Dispatch events
 
 ### Screenshots
 
@@ -134,3 +134,9 @@ In the example above we are setting the `commentable_type` to the class of the b
 If you open the page containing the view where you have placed the above code, you should see a working comments form.
 
 ## Events
+
+This package fires events to let you know when things happen.
+
+- `Laravelista\Comments\Events\CommentCreated`
+- `Laravelista\Comments\Events\CommentUpdated`
+- `Laravelista\Comments\Events\CommentDeleted`

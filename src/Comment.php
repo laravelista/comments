@@ -3,6 +3,9 @@
 namespace Laravelista\Comments;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravelista\Comments\Events\CommentCreated;
+use Laravelista\Comments\Events\CommentUpdated;
+use Laravelista\Comments\Events\CommentDeleted;
 
 class Comment extends Model
 {
@@ -12,6 +15,17 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = ['comment'];
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'created' => CommentCreated::class,
+        'updated' => CommentUpdated::class,
+        'deleted' => CommentDeleted::class,
+    ];
 
     /**
      * The user who posted the comment.
