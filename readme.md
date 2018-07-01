@@ -16,11 +16,11 @@ All comments are stored in a single table with a polymorphic relation for conten
 
 ### Todo
 
-- [x] Create a comment
-- [x] Delete a comment
-- [ ] Edit a Comment
-- [ ] Reply to a comment
-- [ ] Events
+- [x] Create comment
+- [x] Delete comment
+- [x] Edit Comment
+- [x] Reply to comment
+- [ ] Send Events
 
 ### Screenshots
 

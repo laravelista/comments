@@ -1,9 +1,8 @@
-@inject('markdown', 'Parsedown')
-
 @auth
     @if($model->comments->count() < 1)
         <p class="lead">There are no comments yet.</p>
     @endif
+
     <ul class="list-unstyled">
         @foreach($model->comments->where('parent', null) as $comment)
             @include('comments::comment')
@@ -11,12 +10,17 @@
     </ul>
 
     @include('comments::form')
-
-
 @else
     @if($model->comments->count() < 1)
         <p class="lead">There are no comments yet.</p>
     @endif
+
+    <ul class="list-unstyled">
+        @foreach($model->comments->where('parent', null) as $comment)
+            @include('comments::comment')
+        @endforeach
+    </ul>
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Authentication required</h5>

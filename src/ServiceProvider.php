@@ -31,6 +31,18 @@ class ServiceProvider extends LaravelServiceProvider
         Gate::define('delete-comment', function ($user, $comment) {
             return $user->id == $comment->commenter_id;
         });
+
+        // if the current user is the user that posted the comment
+        // then the current user can edit the comment.
+        Gate::define('edit-comment', function ($user, $comment) {
+            return $user->id == $comment->commenter_id;
+        });
+
+        // The user can only reply to other peoples comments and
+        // not to his own comments.
+        Gate::define('reply-to-comment', function ($user, $comment) {
+            return $user->id != $comment->commenter_id;
+        });
     }
 
     public function register()
