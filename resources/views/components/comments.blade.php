@@ -5,11 +5,11 @@
 
     <ul class="list-unstyled">
         @foreach($model->comments->where('parent', null) as $comment)
-            @include('comments::comment')
+            @include('comments::_comment')
         @endforeach
     </ul>
 
-    @include('comments::form')
+    @include('comments::_form')
 @else
     @if($model->comments->count() < 1)
         <p class="lead">There are no comments yet.</p>
@@ -17,7 +17,7 @@
 
     <ul class="list-unstyled">
         @foreach($model->comments->where('parent', null) as $comment)
-            @include('comments::comment')
+            @include('comments::_comment')
         @endforeach
     </ul>
 

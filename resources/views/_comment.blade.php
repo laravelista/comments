@@ -88,7 +88,7 @@
         <br />{{-- Margin bottom --}}
 
         @foreach($comment->children as $child)
-            @include('comments::comment', [
+            @include('comments::_comment', [
                 'comment' => $child,
                 'reply' => true
             ])

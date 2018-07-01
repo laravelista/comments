@@ -14,13 +14,17 @@ This package can be used to comment on any model you have in your application.
 
 All comments are stored in a single table with a polymorphic relation for content and a one-to-many relation for the user who posted the comment.
 
-### Todo
+### Features
 
+- [x] View comments
 - [x] Create comment
 - [x] Delete comment
 - [x] Edit Comment
 - [x] Reply to comment
-- [ ] Send Events
+- [x] Authorization rules
+- [x] Support localization
+- [x] View customization
+- [ ] Dispatch Events
 
 ### Screenshots
 
@@ -28,23 +32,23 @@ Here are a few screenshots.
 
 No comments & guest:
 
-__New screenshots coming soon.__
+[Imgur](https://i.imgur.com/9df4Xun.png)
 
 No comments & logged in:
 
-__New screenshots coming soon.__
+[Imgur](https://i.imgur.com/ALI6GbR.png)
 
 One comment:
 
-__New screenshots coming soon.__
+[Imgur](https://i.imgur.com/9wBNiy2.png)
 
 One comment edit form:
 
-__New screenshots coming soon.__
+[Imgur](https://i.imgur.com/cxDh34O.png)
 
 Two comments from different users:
 
-__New screenshots coming soon.__
+[Imgur](https://i.imgur.com/2P5u25x.png)
 
 ### Tutorials & articles
 
@@ -125,6 +129,8 @@ In the view where you want to display comments, place this code and modify it:
 @endcomments
 ```
 
-In the example above we are setting the `commentable_type` to the class of the model. We are also passing the `commentable_id` the `id` of the book so that we know to which book the comments relate to. Behind the scenes, the package detects the currently logged in user if any.
+In the example above we are setting the `commentable_type` to the class of the book. We are also passing the `commentable_id` the `id` of the book so that we know to which book the comments relate to. Behind the scenes, the package detects the currently logged in user if any.
 
 If you open the page containing the view where you have placed the above code, you should see a working comments form.
+
+## Events
