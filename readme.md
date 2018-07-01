@@ -32,23 +32,23 @@ Here are a few screenshots.
 
 No comments & guest:
 
-[Imgur](https://i.imgur.com/9df4Xun.png)
+![](https://i.imgur.com/9df4Xun.png)
 
 No comments & logged in:
 
-[Imgur](https://i.imgur.com/ALI6GbR.png)
+![](https://i.imgur.com/ALI6GbR.png)
 
 One comment:
 
-[Imgur](https://i.imgur.com/9wBNiy2.png)
+![](https://i.imgur.com/9wBNiy2.png)
 
 One comment edit form:
 
-[Imgur](https://i.imgur.com/cxDh34O.png)
+![](https://i.imgur.com/cxDh34O.png)
 
 Two comments from different users:
 
-[Imgur](https://i.imgur.com/2P5u25x.png)
+![](https://i.imgur.com/2P5u25x.png)
 
 ### Tutorials & articles
 
