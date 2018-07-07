@@ -1,12 +1,8 @@
 # Comments
 
-[![Latest Stable Version](https://poser.pugx.org/laravelista/comments/v/stable)](https://packagist.org/packages/laravelista/comments)
-[![Total Downloads](https://poser.pugx.org/laravelista/comments/downloads)](https://packagist.org/packages/laravelista/comments)
-[![License](https://poser.pugx.org/laravelista/comments/license)](https://packagist.org/packages/laravelista/comments)
+Comments is a Laravel package. With it you can easily implement native comments for your application.
 
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
-
-Comments is a Laravel package. With it you can easily implement native comments for your application.
 
 ## Overview
 
