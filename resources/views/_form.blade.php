@@ -6,7 +6,7 @@
             <input type="hidden" name="commentable_id" value="{{ $model->id }}" />
             <div class="form-group">
                 <label for="message">Enter your message here:</label>
-                <textarea class="form-control @if($errors->has('message')) is-invalid @endif" name="message" rows="3"></textarea>
+                <textarea class="form-control {{ $errors->has('message') ? 'is-invalid' : '' }}" name="message" rows="3"></textarea>
                 <div class="invalid-feedback">
                     Your message is required.
                 </div>
@@ -16,4 +16,4 @@
         </form>
     </div>
 </div>
-<br />
+<br>
