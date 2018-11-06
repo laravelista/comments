@@ -2,9 +2,9 @@
 
 namespace Laravelista\Comments;
 
-use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
 {
@@ -29,19 +29,19 @@ class ServiceProvider extends LaravelServiceProvider
         // if the current user is the user that posted the comment
         // then the current user can delete the comment.
         Gate::define('delete-comment', function ($user, $comment) {
-            return $user->id == $comment->commenter_id;
+            return $user->id === $comment->commenter_id;
         });
 
         // if the current user is the user that posted the comment
         // then the current user can edit the comment.
         Gate::define('edit-comment', function ($user, $comment) {
-            return $user->id == $comment->commenter_id;
+            return $user->id === $comment->commenter_id;
         });
 
         // The user can only reply to other peoples comments and
         // not to his own comments.
         Gate::define('reply-to-comment', function ($user, $comment) {
-            return $user->id != $comment->commenter_id;
+            return $user->id !== $comment->commenter_id;
         });
     }
 

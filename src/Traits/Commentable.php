@@ -1,6 +1,8 @@
 <?php
 
-namespace Laravelista\Comments;
+namespace Laravelista\Comments\Traits;
+
+use Laravelista\Comments\Entity\Comment;
 
 /**
  * Add this trait to any model that you want to be able to

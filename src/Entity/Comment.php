@@ -1,11 +1,11 @@
 <?php
 
-namespace Laravelista\Comments;
+namespace Laravelista\Comments\Entity;
 
 use Illuminate\Database\Eloquent\Model;
 use Laravelista\Comments\Events\CommentCreated;
-use Laravelista\Comments\Events\CommentUpdated;
 use Laravelista\Comments\Events\CommentDeleted;
+use Laravelista\Comments\Events\CommentUpdated;
 
 class Comment extends Model
 {
@@ -57,5 +57,37 @@ class Comment extends Model
     public function parent()
     {
         return $this->belongsTo(Comment::class, 'child_id');
+    }
+
+    /**
+     * @param string $message
+     * @return Comment
+     */
+    public function updateComment(string $message):Comment {
+        $this->update([
+            'comment' => $message
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param $user
+     * @param $model
+     * @param string $message
+     * @param null $parent
+     * @return Comment
+     */
+    public function createComment($user, $model, string $message, $parent = null):Comment {
+
+        $this->commenter()->associate($user);
+        $this->commentable()->associate($model);
+        if ($parent !== null) {
+            $this->parent()->associate($parent);
+        }
+        $this->comment = $message;
+        $this->save();
+
+        return $this;
     }
 }

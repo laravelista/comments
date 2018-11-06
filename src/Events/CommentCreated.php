@@ -3,7 +3,7 @@
 namespace Laravelista\Comments\Events;
 
 use Illuminate\Queue\SerializesModels;
-use Laravelista\Comments\Comment;
+use Laravelista\Comments\Entity\Comment;
 
 class CommentCreated
 {

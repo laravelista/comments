@@ -1,11 +1,12 @@
 <?php
 
-namespace Laravelista\Comments;
+namespace Laravelista\Comments\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Laravelista\Comments\Entity\Comment;
 
 class CommentsController extends Controller
 {
@@ -19,7 +20,7 @@ class CommentsController extends Controller
     /**
      * Creates a new comment for given model.
      */
-    public function store(Request $request)
+    public function store(Request $request, Comment $comment)
     {
         $this->validate($request, [
             'commentable_type' => 'required|string',
@@ -28,12 +29,7 @@ class CommentsController extends Controller
         ]);
 
         $model = $request->commentable_type::findOrFail($request->commentable_id);
-
-        $comment = new Comment;
-        $comment->commenter()->associate(auth()->user());
-        $comment->commentable()->associate($model);
-        $comment->comment = $request->message;
-        $comment->save();
+        $comment = $comment->createComment(auth()->user(), $model, $request->message);
 
         return redirect()->to(url()->previous() . '#comment-' . $comment->id);
     }
@@ -49,9 +45,7 @@ class CommentsController extends Controller
             'message' => 'required|string'
         ]);
 
-        $comment->update([
-            'comment' => $request->message
-        ]);
+        $comment->updateComment($request->message);
 
         return redirect()->to(url()->previous() . '#comment-' . $comment->id);
     }
@@ -69,7 +63,9 @@ class CommentsController extends Controller
     }
 
     /**
-     * Creates a reply "comment" to a comment.
+     * @param Request $request
+     * @param Comment $comment
+     * @return mixed
      */
     public function reply(Request $request, Comment $comment)
     {
@@ -79,12 +75,7 @@ class CommentsController extends Controller
             'message' => 'required|string'
         ]);
 
-        $reply = new Comment;
-        $reply->commenter()->associate(auth()->user());
-        $reply->commentable()->associate($comment->commentable);
-        $reply->parent()->associate($comment);
-        $reply->comment = $request->message;
-        $reply->save();
+        $reply = (new Comment)->createComment(auth()->user(), $comment->commentable, $request->message, $comment);
 
         return redirect()->to(url()->previous() . '#comment-' . $reply->id);
     }
