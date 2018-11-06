@@ -16,7 +16,7 @@
     @endif
 
     <ul class="list-unstyled">
-        @foreach($model->comments->where('parent', null) as $comment)
+        @foreach($model->comments->parentless() as $comment)
             @include('comments::_comment')
         @endforeach
     </ul>

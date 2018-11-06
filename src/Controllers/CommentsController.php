@@ -7,6 +7,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravelista\Comments\Entity\Comment;
+use Laravelista\Comments\Requests\EditRequest;
+use Laravelista\Comments\Requests\SaveRequest;
 
 class CommentsController extends Controller
 {
@@ -20,13 +22,8 @@ class CommentsController extends Controller
     /**
      * Creates a new comment for given model.
      */
-    public function store(Request $request, Comment $comment)
+    public function store(SaveRequest $request, Comment $comment)
     {
-        $this->validate($request, [
-            'commentable_type' => 'required|string',
-            'commentable_id' => 'required|integer|min:1',
-            'message' => 'required|string'
-        ]);
 
         $model = $request->commentable_type::findOrFail($request->commentable_id);
         $comment = $comment->createComment(auth()->user(), $model, $request->message);
@@ -37,14 +34,9 @@ class CommentsController extends Controller
     /**
      * Updates the message of the comment.
      */
-    public function update(Request $request, Comment $comment)
+    public function update(EditRequest $request, Comment $comment)
     {
         $this->authorize('edit-comment', $comment);
-
-        $this->validate($request, [
-            'message' => 'required|string'
-        ]);
-
         $comment->updateComment($request->message);
 
         return redirect()->to(url()->previous() . '#comment-' . $comment->id);

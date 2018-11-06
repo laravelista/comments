@@ -59,6 +59,11 @@ class Comment extends Model
         return $this->belongsTo(Comment::class, 'child_id');
     }
 
+    public function scopeParentless($query)
+    {
+        return $query->where('parent', null);
+    }
+
     /**
      * @param string $message
      * @return Comment
