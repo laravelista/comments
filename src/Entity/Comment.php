@@ -3,12 +3,15 @@
 namespace Laravelista\Comments\Entity;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravelista\Comments\Events\CommentCreated;
 use Laravelista\Comments\Events\CommentDeleted;
 use Laravelista\Comments\Events\CommentUpdated;
 
 class Comment extends Model
 {
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +31,8 @@ class Comment extends Model
     ];
 
     protected $with = ['children', 'commenter'];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The user who posted the comment.
@@ -61,6 +66,10 @@ class Comment extends Model
         return $this->belongsTo(Comment::class, 'child_id');
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeParentless($query)
     {
         return $query->doesntHave('parent');

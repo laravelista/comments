@@ -21,6 +21,10 @@ class CommentsController extends Controller
 
     /**
      * Creates a new comment for given model.
+     *
+     * @param SaveRequest $request
+     * @param Comment $comment
+     * @return mixed
      */
     public function store(SaveRequest $request, Comment $comment)
     {
@@ -32,6 +36,10 @@ class CommentsController extends Controller
 
     /**
      * Updates the message of the comment.
+     *
+     * @param EditRequest $request
+     * @param Comment $comment
+     * @return mixed
      */
     public function update(EditRequest $request, Comment $comment)
     {
@@ -43,6 +51,9 @@ class CommentsController extends Controller
 
     /**
      * Deletes a comment.
+     *
+     * @param Comment $comment
+     * @return mixed
      */
     public function destroy(Comment $comment)
     {

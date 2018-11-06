@@ -21,6 +21,7 @@ class CreateCommentsTable extends Migration
             $table->unsignedBigInteger('child_id')->nullable();
             $table->foreign('child_id')->references('id')->on('comments')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

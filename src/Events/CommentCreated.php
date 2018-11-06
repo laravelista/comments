@@ -12,9 +12,8 @@ class CommentCreated
     public $comment;
 
     /**
-     * Create a new event instance.
-     *
-     * @return void
+     * CommentCreated constructor.
+     * @param Comment $comment
      */
     public function __construct(Comment $comment)
     {

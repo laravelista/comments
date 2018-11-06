@@ -4,10 +4,14 @@ namespace Laravelista\Comments;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Laravelista\Comments\Entity\Comment;
+use Laravelista\Comments\Policies\CommentPolicy;
+
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
 {
+
     public function boot()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../migrations');
@@ -26,12 +30,13 @@ class ServiceProvider extends LaravelServiceProvider
 
         Blade::component('comments::components.comments', 'comments');
 
+
+
         // if the current user is the user that posted the comment
         // then the current user can delete the comment.
         Gate::define('delete-comment', function ($user, $comment) {
             return $user->id === $comment->commenter_id;
         });
-
         // if the current user is the user that posted the comment
         // then the current user can edit the comment.
         Gate::define('edit-comment', function ($user, $comment) {
@@ -43,6 +48,39 @@ class ServiceProvider extends LaravelServiceProvider
         Gate::define('reply-to-comment', function ($user, $comment) {
             return $user->id !== $comment->commenter_id;
         });
+
+        /*
+                // if the current user is the user that posted the comment
+                // then the current user can delete the comment.
+                Gate::define('delete-comment', function ($user, $comment) {
+                    return $user->id === $comment->commenter_id;
+                });
+                // if the current user is the user that posted the comment
+                // then the current user can edit the comment.
+                Gate::define('edit-comment', function ($user, $comment) {
+                    return $user->id === $comment->commenter_id;
+                });
+
+                // The user can only reply to other peoples comments and
+                // not to his own comments.
+                Gate::define('reply-to-comment', function ($user, $comment) {
+                    return $user->id !== $comment->commenter_id;
+                });
+
+                Gate::define('delete-comment', __DIR__ . '\Policies\CommentPolicy@delete');
+
+
+                // if the current user is the user that posted the comment
+                // then the current user can delete the comment.
+                Gate::define('delete-comment', __DIR__ . '\Policies\CommentPolicy@delete');
+
+                // if the current user is the user that posted the comment
+                // then the current user can edit the comment.
+                Gate::define('edit-comment',  __DIR__ . '\Policies\CommentPolicy@edit');
+
+                // The user can only reply to other peoples comments and
+                // not to his own comments.
+                Gate::define('reply-to-comment',  __DIR__ . '\Policies\CommentPolicy@reply');*/
     }
 
     public function register()
