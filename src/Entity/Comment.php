@@ -27,6 +27,8 @@ class Comment extends Model
         'deleted' => CommentDeleted::class,
     ];
 
+    protected $with = ['children', 'commenter'];
+
     /**
      * The user who posted the comment.
      */
@@ -61,7 +63,7 @@ class Comment extends Model
 
     public function scopeParentless($query)
     {
-        return $query->where('parent', null);
+        return $query->doesntHave('parent');
     }
 
     /**

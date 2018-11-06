@@ -24,7 +24,6 @@ class CommentsController extends Controller
      */
     public function store(SaveRequest $request, Comment $comment)
     {
-
         $model = $request->commentable_type::findOrFail($request->commentable_id);
         $comment = $comment->createComment(auth()->user(), $model, $request->message);
 
