@@ -1,26 +1,16 @@
+@if($model->comments->count() < 1)
+    <div class="alert alert-warning">There are no comments yet.</div>
+@endif
+
+<ul class="list-unstyled">
+    @foreach($model->comments->where('parent', null) as $comment)
+        @include('comments::_comment')
+    @endforeach
+</ul>
+
 @auth
-    @if($model->comments->count() < 1)
-        <p class="lead">There are no comments yet.</p>
-    @endif
-
-    <ul class="list-unstyled">
-        @foreach($model->comments->where('parent', null) as $comment)
-            @include('comments::_comment')
-        @endforeach
-    </ul>
-
     @include('comments::_form')
 @else
-    @if($model->comments->count() < 1)
-        <p class="lead">There are no comments yet.</p>
-    @endif
-
-    <ul class="list-unstyled">
-        @foreach($model->comments->where('parent', null) as $comment)
-            @include('comments::_comment')
-        @endforeach
-    </ul>
-
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Authentication required</h5>
