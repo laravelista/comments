@@ -26,7 +26,7 @@ class CommentPolicy
      */
     public function delete($user, Comment $comment) : bool
     {
-        return $user->id === $comment->commenter_id && $comment->children->isEmpty();
+        return $user->id === $comment->commenter_id;
     }
 
     /**
