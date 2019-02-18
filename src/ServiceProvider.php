@@ -26,23 +26,16 @@ class ServiceProvider extends LaravelServiceProvider
 
         Blade::component('comments::components.comments', 'comments');
 
-        // if the current user is the user that posted the comment
-        // then the current user can delete the comment.
-        Gate::define('delete-comment', function ($user, $comment) {
-            return $user->id == $comment->commenter_id;
-        });
-
-        // if the current user is the user that posted the comment
-        // then the current user can edit the comment.
-        Gate::define('edit-comment', function ($user, $comment) {
-            return $user->id == $comment->commenter_id;
-        });
-
-        // The user can only reply to other peoples comments and
-        // not to his own comments.
-        Gate::define('reply-to-comment', function ($user, $comment) {
-            return $user->id != $comment->commenter_id;
-        });
+        // Define permission defined in config
+        $permissions = config('comments.permissions', [
+            'create-comment' => 'Laravelista\Comments\CommentPolicy@create',
+            'delete-comment' => 'Laravelista\Comments\CommentPolicy@delete',
+            'edit-comment' => 'Laravelista\Comments\CommentPolicy@update',
+            'reply-to-comment' => 'Laravelista\Comments\CommentPolicy@reply',
+        ]);
+        foreach($permissions as $permission => $policy) {
+            Gate::define($permission, $policy);
+        }
     }
 
     public function register()
