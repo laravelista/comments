@@ -15,8 +15,12 @@ class ServiceProvider extends LaravelServiceProvider
         $this->publishes([
             __DIR__ . '/../config/comments.php' => config_path('comments.php'),
         ], 'config');
-
+        
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
+        
+        if (file_exists(base_path().'/routes/comments/custom.php')) {
+            $this->loadRoutesFrom(base_path().'/routes/comments/custom.php');
+        }
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'comments');
 
