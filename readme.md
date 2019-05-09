@@ -2,7 +2,7 @@
 
 Comments is a Laravel package. With it you can easily implement native comments for your application.
 
-[![Become a Patron](https://img.shields.io/badge/Becoma%20a-Patron-f96854.svg?style=for-the-badge)](https://www.patreon.com/shockmario)
+[![Become a Patron](https://img.shields.io/badge/Becoma%20a-Patron-f96854.svg?style=for-the-badge)](https://www.patreon.com/laravelista)
 
 ## Overview
 
