@@ -1,4 +1,5 @@
 @inject('markdown', 'Parsedown')
+@php($markdown->setSafeMode(true))
 
 @if(isset($reply) && $reply === true)
   <div id="comment-{{ $comment->id }}" class="media">
