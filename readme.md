@@ -100,7 +100,10 @@ class Product extends Model
 
 In the `config` file you can specify:
 
-- where is your User model located; the default is `\App\User::class`
+- where is your User model located; the default is `\App\User::class`.
+- the behaviour of permissions by replacing them with your own.
+- the controller which handles comments creation, update, deletion and replies.
+- to disable or enable the routes that come with this package.
 
 Publish the config file (optional):
 
@@ -143,6 +146,47 @@ This package fires events to let you know when things happen.
 - `Laravelista\Comments\Events\CommentCreated`
 - `Laravelista\Comments\Events\CommentUpdated`
 - `Laravelista\Comments\Events\CommentDeleted`
+
+## REST API
+
+To change the controller or the routes, see the config.
+
+```
+Route::post('comments', '\Laravelista\Comments\CommentController@store');
+Route::delete('comments/{comment}', '\Laravelista\Comments\CommentController@destroy');
+Route::put('comments/{comment}', '\Laravelista\Comments\CommentController@update');
+Route::post('comments/{comment}', '\Laravelista\Comments\CommentController@reply');
+```
+
+### POST `/comments`
+
+Request data:
+
+```
+'commentable_type' => 'required|string',
+'commentable_id' => 'required|string|min:1',
+'message' => 'required|string'
+```
+
+### PUT `/comments/{comment}`
+
+- {comment} - Comment ID.
+
+Request data:
+
+```
+'message' => 'required|string'
+```
+
+### POST `/comments/{comment}`
+
+- {comment} - Comment ID.
+
+Request data:
+
+```
+'message' => 'required|string'
+```
 
 ## Troubleshoot
 

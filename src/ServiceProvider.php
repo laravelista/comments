@@ -10,37 +10,34 @@ class ServiceProvider extends LaravelServiceProvider
 {
     public function boot()
     {
+        if (config('comments.routes') === true) {
+            $this->loadRoutesFrom(__DIR__ . '/routes.php');
+        }
+
         $this->loadMigrationsFrom(__DIR__ . '/../migrations');
+
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'comments');
+
+        Blade::include('comments::components.comments', 'comments');
+
+        // Define permission defined in config
+        $permissions = config('comments.permissions');
+
+        foreach($permissions as $permission => $policy) {
+            Gate::define($permission, $policy);
+        }
 
         $this->publishes([
             __DIR__.'/../migrations/' => database_path('migrations')
         ], 'migrations');
 
         $this->publishes([
-            __DIR__ . '/../config/comments.php' => config_path('comments.php'),
-        ], 'config');
-
-        $this->loadRoutesFrom(__DIR__ . '/routes.php');
-
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'comments');
-
-        $this->publishes([
             __DIR__ . '/../resources/views' => resource_path('views/vendor/comments'),
         ], 'views');
 
-        Blade::include('comments::components.comments', 'comments');
-
-        // Define permission defined in config
-        $permissions = config('comments.permissions', [
-            'create-comment' => 'Laravelista\Comments\CommentPolicy@create',
-            'delete-comment' => 'Laravelista\Comments\CommentPolicy@delete',
-            'edit-comment' => 'Laravelista\Comments\CommentPolicy@update',
-            'reply-to-comment' => 'Laravelista\Comments\CommentPolicy@reply',
-        ]);
-
-        foreach($permissions as $permission => $policy) {
-            Gate::define($permission, $policy);
-        }
+        $this->publishes([
+            __DIR__ . '/../config/comments.php' => config_path('comments.php'),
+        ], 'config');
     }
 
     public function register()

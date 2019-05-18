@@ -1,6 +1,6 @@
 <?php
 
-Route::post('comments', '\Laravelista\Comments\CommentsController@store');
-Route::delete('comments/{comment}', '\Laravelista\Comments\CommentsController@destroy');
-Route::put('comments/{comment}', '\Laravelista\Comments\CommentsController@update');
-Route::post('comments/{comment}', '\Laravelista\Comments\CommentsController@reply');
+Route::post('comments', config('comments.controller') . '@store');
+Route::delete('comments/{comment}', config('comments.controller') . '@destroy');
+Route::put('comments/{comment}', config('comments.controller') . '@update');
+Route::post('comments/{comment}', config('comments.controller') . '@reply');

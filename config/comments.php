@@ -1,13 +1,34 @@
 <?php
 
 return [
-    // The model which creates the comments aka the User model
+    /**
+     * The model which creates the comments aka the User model
+     */
     'commenter' => \App\User::class,
 
+    /**
+     * You can customize the behaviour of these permissions by
+     * creating your own and pointing to it here.
+     */
     'permissions' => [
         'create-comment' => 'Laravelista\Comments\CommentPolicy@create',
         'delete-comment' => 'Laravelista\Comments\CommentPolicy@delete',
         'edit-comment' => 'Laravelista\Comments\CommentPolicy@update',
         'reply-to-comment' => 'Laravelista\Comments\CommentPolicy@reply',
-    ]
+    ],
+
+    /**
+     * The Comment Controller.
+     * Change this to your own implementation of the CommentController.
+     * You can use the \Laravelista\Comments\CommentControllerInterface.
+     */
+    'controller' => '\Laravelista\Comments\CommentController',
+
+    /**
+     * Disable/enable the package routes.
+     * If you want to completely take over the way this package handles
+     * routes and controller logic, set this to false and provide your
+     * own routes and controller for comments.
+     */
+    'routes' => true
 ];
