@@ -116,6 +116,14 @@ The default UI is made for Bootstrap 4, but you can change it however you want.
 php artisan vendor:publish --provider="Laravelista\Comments\ServiceProvider" --tag=views
 ```
 
+### Publish Migrations (customization)
+
+You can publish migration to allow you to have more control over your table
+
+```bash
+php artisan vendor:publish --provider="Laravelista\Comments\ServiceProvider" --tag=migrations
+```
+
 ## Usage
 
 In the view where you want to display comments, place this code and modify it:
