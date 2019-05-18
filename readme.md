@@ -143,3 +143,52 @@ This package fires events to let you know when things happen.
 - `Laravelista\Comments\Events\CommentCreated`
 - `Laravelista\Comments\Events\CommentUpdated`
 - `Laravelista\Comments\Events\CommentDeleted`
+
+## Troubleshoot
+
+### Support for non-integer IDs (updating)
+
+If you are updating an already existing database table `comments` and want support for non-integer IDs **(new installations get this by default)**, then create a new migration with `php artisan make:migration allow_commentable_id_to_be_string` and paste this code inside:
+
+```
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AllowCommentableIdToBeString extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('comments', function (Blueprint $table) {
+            $table->string('commentable_id')->change();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('comments', function (Blueprint $table) {
+            $table->unsignedBigInteger('commentable_id')->change();
+        });
+    }
+}
+```
+
+Then, add `doctrine/dbal` dependency with:
+
+```
+composer require doctrine/dbal
+```
+
+Finally, run `php artisan migrate`.
