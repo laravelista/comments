@@ -17,6 +17,15 @@ class Comment extends Model
     protected $fillable = ['comment'];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'commenter_id' => 'integer'
+    ];
+
+    /**
      * The event map for the model.
      *
      * @var array

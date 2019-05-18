@@ -24,7 +24,7 @@ class ServiceProvider extends LaravelServiceProvider
             __DIR__ . '/../resources/views' => resource_path('views/vendor/comments'),
         ], 'views');
 
-        Blade::component('comments::components.comments', 'comments');
+        Blade::include('comments::components.comments', 'comments');
 
         // Define permission defined in config
         $permissions = config('comments.permissions', [
@@ -33,6 +33,7 @@ class ServiceProvider extends LaravelServiceProvider
             'edit-comment' => 'Laravelista\Comments\CommentPolicy@update',
             'reply-to-comment' => 'Laravelista\Comments\CommentPolicy@reply',
         ]);
+
         foreach($permissions as $permission => $policy) {
             Gate::define($permission, $policy);
         }

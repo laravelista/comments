@@ -22,10 +22,10 @@ class CommentsController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create-comment', Comment::class);
-        
+
         $this->validate($request, [
             'commentable_type' => 'required|string',
-            'commentable_id' => 'required|integer|min:1',
+            'commentable_id' => 'required|string|min:1',
             'message' => 'required|string'
         ]);
 
