@@ -1,5 +1,15 @@
 <div class="card">
     <div class="card-body">
+        @if($errors->has('commentable_type'))
+            <div class="alert alert-danger" role="alert">
+                {{ $errors->get('commentable_type') }}
+            </div>
+        @endif
+        @if($errors->has('commentable_id'))
+            <div class="alert alert-danger" role="alert">
+                {{ $errors->get('commentable_id') }}
+            </div>
+        @endif
         <form method="POST" action="{{ url('comments') }}">
             @csrf
             <input type="hidden" name="commentable_type" value="\{{ get_class($model) }}" />
