@@ -31,7 +31,8 @@ class CommentsController extends Controller
 
         $model = $request->commentable_type::findOrFail($request->commentable_id);
 
-        $comment = new Comment;
+        $commentClass = config('comments.comment_class');
+        $comment = new $commentClass;
         $comment->commenter()->associate(auth()->user());
         $comment->commentable()->associate($model);
         $comment->comment = $request->message;

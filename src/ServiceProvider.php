@@ -2,6 +2,7 @@
 
 namespace Laravelista\Comments;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
@@ -36,6 +37,8 @@ class ServiceProvider extends LaravelServiceProvider
         foreach($permissions as $permission => $policy) {
             Gate::define($permission, $policy);
         }
+
+        Route::model('comment', config('comments.comment_class'));
     }
 
     public function register()

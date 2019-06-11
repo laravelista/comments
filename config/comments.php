@@ -4,6 +4,8 @@ return [
     // The model which creates the comments aka the User model
     'commenter' => \App\User::class,
 
+    'comment_class' => \Laravelista\Comments\Comment::class,
+
     'permissions' => [
         'create-comment' => 'Laravelista\Comments\CommentPolicy@create',
         'delete-comment' => 'Laravelista\Comments\CommentPolicy@delete',
