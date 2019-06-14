@@ -38,7 +38,7 @@ class ServiceProvider extends LaravelServiceProvider
             Gate::define($permission, $policy);
         }
 
-        Route::model('comment', config('comments.comment_class'));
+        Route::model('comment', config('comments.model'));
     }
 
     public function register()
