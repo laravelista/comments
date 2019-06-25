@@ -190,6 +190,55 @@ Request data:
 
 ## Troubleshoot
 
+### Support for multiple user models (updating)
+
+If you are updating an already existing database table `comments` and want support for multiple user models **(new installations get this by default)**, then create a new migration with `php artisan make:migration add_commenter_type_column_to_comments_table` and paste this code inside:
+
+```
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddCommenterTypeColumnToCommentsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('comments', function (Blueprint $table) {
+            $table->string('commenter_id')->change();
+            $table->string('commenter_type');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('comments', function (Blueprint $table) {
+            $table->unsignedBigInteger('commenter_id')->change();
+            $table->dropColumn('commenter_type');
+        });
+    }
+}
+```
+
+Then, add `doctrine/dbal` dependency with:
+
+```
+composer require doctrine/dbal
+```
+
+Finally, run `php artisan migrate`.
+
 ### Support for non-integer IDs (updating)
 
 If you are updating an already existing database table `comments` and want support for non-integer IDs **(new installations get this by default)**, then create a new migration with `php artisan make:migration allow_commentable_id_to_be_string` and paste this code inside:
