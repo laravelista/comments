@@ -9,6 +9,20 @@ namespace Laravelista\Comments;
 trait Commentable
 {
     /**
+     * This static method does voodoo magic to
+     * delete leftover comments once the commentable
+     * model is deleted.
+     */
+    protected static function bootCommentable()
+    {
+        static::deleted(function($commentable) {
+            foreach ($commentable->comments as $comment) {
+                $comment->delete();
+            }
+        });
+    }
+
+    /**
      * Returns all comments for this model.
      */
     public function comments()
