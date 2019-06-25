@@ -200,6 +200,7 @@ If you are updating an already existing database table `comments` and want suppo
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class AddCommenterTypeColumnToCommentsTable extends Migration
 {
@@ -212,8 +213,12 @@ class AddCommenterTypeColumnToCommentsTable extends Migration
     {
         Schema::table('comments', function (Blueprint $table) {
             $table->string('commenter_id')->change();
-            $table->string('commenter_type');
+            $table->string('commenter_type')->nullable();
         });
+
+        DB::table('comments')->update([
+            'commenter_type' => '\App\User'
+        ]);
     }
 
     /**
