@@ -13,6 +13,6 @@ trait Commenter
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'commenter_id');
+        return $this->morphMany(Comment::class, 'commenter');
     }
 }
