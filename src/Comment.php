@@ -48,7 +48,7 @@ class Comment extends Model
      */
     public function children()
     {
-        return $this->hasMany(Comment::class, 'child_id');
+        return $this->hasMany(config('comments.model'), 'child_id');
     }
 
     /**
@@ -56,6 +56,6 @@ class Comment extends Model
      */
     public function parent()
     {
-        return $this->belongsTo(Comment::class, 'child_id');
+        return $this->belongsTo(config('comments.model'), 'child_id');
     }
 }

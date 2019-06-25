@@ -7,6 +7,13 @@ return [
     'commenter' => \App\User::class,
 
     /**
+     * To extend the base Comment model one just needs to create a new
+     * CustomComment model extending the Comment model shipped with the
+     * package and change this configuration option to their extended model.
+     */
+    'model' => \Laravelista\Comments\Comment::class,
+
+    /**
      * You can customize the behaviour of these permissions by
      * creating your own and pointing to it here.
      */

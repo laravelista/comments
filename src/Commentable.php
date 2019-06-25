@@ -13,6 +13,6 @@ trait Commentable
      */
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphMany(config('comments.model'), 'commentable');
     }
 }

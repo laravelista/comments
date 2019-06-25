@@ -2,6 +2,7 @@
 
 namespace Laravelista\Comments;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
@@ -38,6 +39,8 @@ class ServiceProvider extends LaravelServiceProvider
         $this->publishes([
             __DIR__ . '/../config/comments.php' => config_path('comments.php'),
         ], 'config');
+
+        Route::model('comment', config('comments.model'));
     }
 
     public function register()
