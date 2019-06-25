@@ -1,10 +1,6 @@
 <?php
 
 return [
-    /**
-     * The model which creates the comments aka the User model
-     */
-    'commenter' => \App\User::class,
 
     /**
      * To extend the base Comment model one just needs to create a new
