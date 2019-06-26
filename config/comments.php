@@ -57,6 +57,8 @@ return [
      * Visitors will be asked to provide their name and email
      * address in order to post a comment.
      */
-    'guest_commenting' => false
+    'guest_commenting' => false,
+
+    'likes' => false
 
 ];

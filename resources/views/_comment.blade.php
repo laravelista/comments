@@ -11,7 +11,7 @@
         <h5 class="mt-0 mb-1">{{ $comment->commenter->name ?? $comment->guest_name }} <small class="text-muted">- {{ $comment->created_at->diffForHumans() }}</small></h5>
         <div style="white-space: pre-wrap;">{!! $markdown->line($comment->comment) !!}</div>
 
-        <p>
+        <div>
             @can('reply-to-comment', $comment)
                 <button data-toggle="modal" data-target="#reply-modal-{{ $comment->id }}" class="btn btn-sm btn-link text-uppercase">Reply</button>
             @endcan
@@ -25,7 +25,8 @@
                     @csrf
                 </form>
             @endcan
-        </p>
+            <span class="text-danger">❤</span> 1 {{-- ♡ --}}
+        </div>
 
         @can('edit-comment', $comment)
             <div class="modal fade" id="comment-modal-{{ $comment->id }}" tabindex="-1" role="dialog">
