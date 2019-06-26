@@ -57,6 +57,6 @@ return [
      * Visitors will be asked to provide their name and email
      * address in order to post a comment.
      */
-    'guest_commenting' => true
+    'guest_commenting' => false
 
 ];
