@@ -1,16 +1,18 @@
-@if($model->comments->count() < 1)
+@php
+    if (isset($approved) and $approved == true) {
+        $comments = $model->approvedComments;
+    } else {
+        $comments = $model->comments;
+    }
+@endphp
+
+@if($comments->count() < 1)
     <div class="alert alert-warning">There are no comments yet.</div>
 @endif
 
 <ul class="list-unstyled">
     @php
-        if (isset($approved) and $approved == true) {
-            $grouped_comments = $model->approvedComments;
-        } else {
-            $grouped_comments = $model->comments;
-        }
-
-        $grouped_comments = $grouped_comments->sortBy('created_at')->groupBy('child_id');
+        $grouped_comments = $comments->sortBy('created_at')->groupBy('child_id');
     @endphp
     @foreach($grouped_comments as $comment_id => $comments)
         {{-- Process parent nodes --}}
