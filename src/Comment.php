@@ -21,7 +21,7 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $fillable = ['comment', 'approved'];
+    protected $fillable = ['comment', 'approved', 'guest_name', 'guest_email'];
 
     /**
      * The attributes that should be cast to native types.

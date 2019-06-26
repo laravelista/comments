@@ -25,6 +25,7 @@ All comments are stored in a single table with a polymorphic relation for conten
 - [x] **Support for multiple User models**
 - [x] **Solved N+1 query problem**
 - [x] **Comment approval (optional)**
+- [x] **Guest commenting**
 
 ### Screenshots
 
@@ -203,9 +204,43 @@ Request data:
 'message' => 'required|string'
 ```
 
-## Troubleshoot
+## Updating from older versions
 
-### Support for approving comments (updating)
+### Support for guest commenting
+
+If you are updating an already existing database table `comments` and want support for guest commenting **(new installations get this by default)**, then create a new migration with `php artisan make:migration add_guest_commenting_columns_to_comments_table` and paste this code inside:
+
+```
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
+
+class AddGuestCommentingColumnsToCommentsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('comments', function (Blueprint $table) {
+            $table->string('commenter_id')->nullable()->change();
+            $table->string('commenter_type')->nullable()->change();
+
+            $table->string('guest_name')->nullable();
+            $table->string('guest_email')->nullable();
+        });
+    }
+}
+```
+
+Finally, run `php artisan migrate`.
+
+### Support for approving comments
 
 If you are updating an already existing database table `comments` and want support for approving comments **(new installations get this by default)**, then create a new migration with `php artisan make:migration add_approved_column_to_comments_table` and paste this code inside:
 
@@ -230,24 +265,12 @@ class AddApprovedColumnToCommentsTable extends Migration
             $table->boolean('approved')->default(true)->nullable();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->dropColumn('approved');
-        });
-    }
 }
 ```
 
 Finally, run `php artisan migrate`.
 
-### Support for multiple user models (updating)
+### Support for multiple user models
 
 If you are updating an already existing database table `comments` and want support for multiple user models **(new installations get this by default)**, then create a new migration with `php artisan make:migration add_commenter_type_column_to_comments_table` and paste this code inside:
 
@@ -277,19 +300,6 @@ class AddCommenterTypeColumnToCommentsTable extends Migration
             'commenter_type' => '\App\User'
         ]);
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->unsignedBigInteger('commenter_id')->change();
-            $table->dropColumn('commenter_type');
-        });
-    }
 }
 ```
 
@@ -301,7 +311,7 @@ composer require doctrine/dbal
 
 Finally, run `php artisan migrate`.
 
-### Support for non-integer IDs (updating)
+### Support for non-integer IDs
 
 If you are updating an already existing database table `comments` and want support for non-integer IDs **(new installations get this by default)**, then create a new migration with `php artisan make:migration allow_commentable_id_to_be_string` and paste this code inside:
 
@@ -323,18 +333,6 @@ class AllowCommentableIdToBeString extends Migration
     {
         Schema::table('comments', function (Blueprint $table) {
             $table->string('commentable_id')->change();
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->unsignedBigInteger('commentable_id')->change();
         });
     }
 }

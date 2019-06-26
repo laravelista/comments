@@ -41,7 +41,7 @@ return [
      * will need to be approved by setting the `approved` column to
      * `true` for each comment.
      *
-     * To see only approved comments use:
+     * To see only approved comments use this code in your view:
      *
      *     @comments([
      *         'model' => $book,
@@ -49,6 +49,14 @@ return [
      *     ])
      *
      */
-    'approval_required' => true
+    'approval_required' => false,
+
+    /**
+     * Set this option to `true` to enable guest commenting.
+     *
+     * Visitors will be asked to provide their name and email
+     * address in order to post a comment.
+     */
+    'guest_commenting' => true
 
 ];
