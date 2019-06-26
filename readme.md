@@ -24,6 +24,7 @@ All comments are stored in a single table with a polymorphic relation for conten
 - [x] **Support for non-integer IDs**
 - [x] **Support for multiple User models**
 - [x] **Solved N+1 query problem**
+- [x] **Comment approval (optional)**
 
 ### Screenshots
 
@@ -142,6 +143,17 @@ In the example above we are setting the `commentable_type` to the class of the b
 
 If you open the page containing the view where you have placed the above code, you should see a working comments form.
 
+### View only approved comments
+
+To view only approved comments, use this code:
+
+```
+@comments([
+    'model' => $book,
+    'approved' => true
+])
+```
+
 ## Events
 
 This package fires events to let you know when things happen.
@@ -192,6 +204,48 @@ Request data:
 ```
 
 ## Troubleshoot
+
+### Support for approving comments (updating)
+
+If you are updating an already existing database table `comments` and want support for approving comments **(new installations get this by default)**, then create a new migration with `php artisan make:migration add_approved_column_to_comments_table` and paste this code inside:
+
+```
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
+
+class AddApprovedColumnToCommentsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('comments', function (Blueprint $table) {
+            $table->boolean('approved')->default(true)->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropColumn('approved');
+        });
+    }
+}
+```
+
+Finally, run `php artisan migrate`.
 
 ### Support for multiple user models (updating)
 

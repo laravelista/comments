@@ -21,7 +21,16 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $fillable = ['comment'];
+    protected $fillable = ['comment', 'approved'];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'approved' => 'boolean'
+    ];
 
     /**
      * The event map for the model.

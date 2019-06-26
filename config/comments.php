@@ -33,5 +33,22 @@ return [
      * routes and controller logic, set this to false and provide your
      * own routes and controller for comments.
      */
-    'routes' => true
+    'routes' => true,
+
+    /**
+     * By default comments posted are marked as approved. If you want
+     * to change this, set this option to true. Then, all comments
+     * will need to be approved by setting the `approved` column to
+     * `true` for each comment.
+     *
+     * To see only approved comments use:
+     *
+     *     @comments([
+     *         'model' => $book,
+     *         'approved' => true
+     *     ])
+     *
+     */
+    'approval_required' => true
+
 ];

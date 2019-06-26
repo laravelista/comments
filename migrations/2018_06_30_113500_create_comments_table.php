@@ -26,6 +26,8 @@ class CreateCommentsTable extends Migration
 
             $table->text('comment');
 
+            $table->boolean('approved')->default(true);
+
             $table->unsignedBigInteger('child_id')->nullable();
             $table->foreign('child_id')->references('id')->on('comments')->onDelete('cascade');
 

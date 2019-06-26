@@ -29,4 +29,12 @@ trait Commentable
     {
         return $this->morphMany(config('comments.model'), 'commentable');
     }
+
+    /**
+     * Returns only approved comments for this model.
+     */
+    public function approvedComments()
+    {
+        return $this->morphMany(config('comments.model'), 'commentable')->where('approved', true);
+    }
 }

@@ -4,7 +4,13 @@
 
 <ul class="list-unstyled">
     @php
-        $grouped_comments = $model->comments->sortBy('created_at')->groupBy('child_id')
+        if (isset($approved) and $approved == true) {
+            $grouped_comments = $model->approvedComments;
+        } else {
+            $grouped_comments = $model->comments;
+        }
+
+        $grouped_comments = $grouped_comments->sortBy('created_at')->groupBy('child_id');
     @endphp
     @foreach($grouped_comments as $comment_id => $comments)
         {{-- Process parent nodes --}}

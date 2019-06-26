@@ -36,6 +36,7 @@ class CommentController extends Controller implements CommentControllerInterface
         $comment->commenter()->associate(auth()->user());
         $comment->commentable()->associate($model);
         $comment->comment = $request->message;
+        $comment->approved = !config('comments.approval_required');
         $comment->save();
 
         return redirect()->to(url()->previous() . '#comment-' . $comment->id);
@@ -87,6 +88,7 @@ class CommentController extends Controller implements CommentControllerInterface
         $reply->commentable()->associate($comment->commentable);
         $reply->parent()->associate($comment);
         $reply->comment = $request->message;
+        $reply->approved = !config('comments.approval_required');
         $reply->save();
 
         return redirect()->to(url()->previous() . '#comment-' . $reply->id);
