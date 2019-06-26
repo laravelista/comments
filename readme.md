@@ -8,19 +8,22 @@ Comments is a Laravel package. With it you can easily implement native comments 
 
 This package can be used to comment on any model you have in your application.
 
-All comments are stored in a single table with a polymorphic relation for content and a one-to-many relation for the user who posted the comment.
+All comments are stored in a single table with a polymorphic relation for content and a polymorphic relation for the user who posted the comment.
 
 ### Features
 
 - [x] View comments
-- [x] Create comment
-- [x] Delete comment
-- [x] Edit comment
-- [x] Reply to comment
-- [x] Authorization rules
-- [x] Support localization
-- [x] View customization
-- [x] Dispatch events
+- [x] Create comments
+- [x] Delete comments
+- [x] Edit comments
+- [x] **Reply to comments**
+- [x] **Authorization rules**
+- [x] **Support localization**
+- [x] **Dispatch events**
+- [x] **Route, Controller, Comment, Migration & View customizations**
+- [x] **Support for non-integer IDs**
+- [x] **Support for multiple User models**
+- [x] **Solved N+1 query problem**
 
 ### Screenshots
 
