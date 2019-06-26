@@ -10,6 +10,13 @@ use Laravelista\Comments\Events\CommentDeleted;
 class Comment extends Model
 {
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['commenter'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

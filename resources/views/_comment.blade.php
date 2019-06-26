@@ -88,12 +88,17 @@
 
         <br />{{-- Margin bottom --}}
 
-        @foreach($comment->children as $child)
-            @include('comments::_comment', [
-                'comment' => $child,
-                'reply' => true
-            ])
-        @endforeach
+        {{-- Recursion for children --}}
+        @if(array_key_exists($comment->id, $grouped_comments->toArray()))
+            @foreach($grouped_comments[$comment->id] as $child)
+                @include('comments::_comment', [
+                    'comment' => $child,
+                    'reply' => true,
+                    'grouped_comments' => $grouped_comments
+                ])
+            @endforeach
+        @endif
+
     </div>
 @if(isset($reply) && $reply === true)
   </div>
