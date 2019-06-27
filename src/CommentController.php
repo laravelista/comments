@@ -18,7 +18,7 @@ class CommentController extends Controller implements CommentControllerInterface
         if (config('comments.guest_commenting') == true) {
             $this->middleware('auth')->except('store');
         } else {
-            $this->middleware('auth');
+            $this->middleware('auth:' . config('comments.auth_guards'));
         }
     }
 

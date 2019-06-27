@@ -36,6 +36,13 @@ return [
     'routes' => true,
 
     /**
+     * The auth middleware uses the default guard configured in config/auth.php.
+     * You can overwrite this adding a comma separated list of guards that you
+     * want to implement wit this package.
+     */
+    'auth_guards' => 'web',
+
+    /**
      * By default comments posted are marked as approved. If you want
      * to change this, set this option to true. Then, all comments
      * will need to be approved by setting the `approved` column to
