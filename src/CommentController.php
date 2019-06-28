@@ -110,7 +110,6 @@ class CommentController extends Controller implements CommentControllerInterface
 
         $commentClass = config('comments.model');
         $reply = new $commentClass;
-        $reply = new Comment;
         $reply->commenter()->associate(auth()->user());
         $reply->commentable()->associate($comment->commentable);
         $reply->parent()->associate($comment);
