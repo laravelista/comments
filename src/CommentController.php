@@ -108,7 +108,8 @@ class CommentController extends Controller implements CommentControllerInterface
             'message' => 'required|string'
         ]);
 
-        $reply = new Comment;
+        $commentClass = config('comments.model');
+        $reply = new $commentClass;
         $reply->commenter()->associate(auth()->user());
         $reply->commentable()->associate($comment->commentable);
         $reply->parent()->associate($comment);
