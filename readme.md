@@ -24,7 +24,7 @@ All comments are stored in a single table with a polymorphic relation for conten
 - [x] **Support for non-integer IDs**
 - [x] **Support for multiple User models**
 - [x] **Solved N+1 query problem**
-- [x] **Comment approval (optional)**
+- [x] **Comment approval (opt-in)**
 - [x] **Guest commenting**
 
 ### Screenshots
@@ -102,13 +102,6 @@ class Product extends Model
 ```
 
 ### Publish Config & configure (optional)
-
-In the `config` file you can specify:
-
-- where is your User model located; the default is `\App\User::class`.
-- the behaviour of permissions by replacing them with your own.
-- the controller which handles comments creation, update, deletion and replies.
-- to disable or enable the routes that come with this package.
 
 Publish the config file (optional):
 
