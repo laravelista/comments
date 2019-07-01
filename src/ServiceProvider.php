@@ -9,24 +9,47 @@ use Illuminate\Support\Facades\Gate;
 
 class ServiceProvider extends LaravelServiceProvider
 {
-    public function boot()
+    /**
+     * If routes are enabled (by default they are),
+     * then load the routes, otherwise don't load
+     * the routes.
+     */
+    protected function loadRoutes()
     {
         if (config('comments.routes') === true) {
             $this->loadRoutesFrom(__DIR__ . '/routes.php');
         }
+    }
+
+    /**
+     * If for some reason you want to override the component.
+     */
+    protected function includeBladeComponent()
+    {
+        Blade::include('comments::components.comments', 'comments');
+    }
+
+    /**
+     * Define permission defined in the config.
+     */
+    protected function definePermissions()
+    {
+        foreach(config('comments.permissions') as $permission => $policy) {
+            Gate::define($permission, $policy);
+        }
+    }
+
+    public function boot()
+    {
+        $this->loadRoutes();
 
         $this->loadMigrationsFrom(__DIR__ . '/../migrations');
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'comments');
 
-        Blade::include('comments::components.comments', 'comments');
+        $this->includeBladeComponent();
 
-        // Define permission defined in config
-        $permissions = config('comments.permissions');
-
-        foreach($permissions as $permission => $policy) {
-            Gate::define($permission, $policy);
-        }
+        $this->definePermissions();
 
         $this->publishes([
             __DIR__.'/../migrations/' => database_path('migrations')
