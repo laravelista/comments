@@ -34,7 +34,7 @@ class CommentController extends Controller implements CommentControllerInterface
         }
 
         // Define guest rules if user is not logged in.
-        if (! Auth::check()) {
+        if (!auth()->check()) {
             $guest_rules = [
                 'guest_name' => 'required|string|max:255',
                 'guest_email' => 'required|string|email|max:255',
@@ -53,7 +53,7 @@ class CommentController extends Controller implements CommentControllerInterface
         $commentClass = config('comments.model');
         $comment = new $commentClass;
 
-        if (! Auth::check()) {
+        if (!auth()->check()) {
             $comment->guest_name = $request->guest_name;
             $comment->guest_email = $request->guest_email;
         } else {
