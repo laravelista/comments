@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller implements CommentControllerInterface
 {
@@ -32,8 +33,8 @@ class CommentController extends Controller implements CommentControllerInterface
             $this->authorize('create-comment', Comment::class);
         }
 
-        // Define guest rules if guest commenting is enabled.
-        if (config('comments.guest_commenting') == true) {
+        // Define guest rules if user is not logged in.
+        if (! Auth::check()) {
             $guest_rules = [
                 'guest_name' => 'required|string|max:255',
                 'guest_email' => 'required|string|email|max:255',
@@ -52,7 +53,7 @@ class CommentController extends Controller implements CommentControllerInterface
         $commentClass = config('comments.model');
         $comment = new $commentClass;
 
-        if (config('comments.guest_commenting') == true) {
+        if (! Auth::check()) {
             $comment->guest_name = $request->guest_name;
             $comment->guest_email = $request->guest_email;
         } else {
