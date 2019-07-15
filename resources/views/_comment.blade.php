@@ -23,6 +23,7 @@
                 <form id="comment-delete-form-{{ $comment->id }}" action="{{ url('comments/' . $comment->id) }}" method="POST" style="display: none;">
                     @method('DELETE')
                     @csrf
+                    @honeypot
                 </form>
             @endcan
         </div>
@@ -34,6 +35,7 @@
                         <form method="POST" action="{{ url('comments/' . $comment->id) }}">
                             @method('PUT')
                             @csrf
+                            @honeypot
                             <div class="modal-header">
                                 <h5 class="modal-title">Edit Comment</h5>
                                 <button type="button" class="close" data-dismiss="modal">
@@ -63,6 +65,7 @@
                     <div class="modal-content">
                         <form method="POST" action="{{ url('comments/' . $comment->id) }}">
                             @csrf
+                            @honeypot
                             <div class="modal-header">
                                 <h5 class="modal-title">Reply to Comment</h5>
                                 <button type="button" class="close" data-dismiss="modal">
