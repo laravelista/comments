@@ -14,7 +14,7 @@ class CommentController extends Controller implements CommentControllerInterface
 
     public function __construct()
     {
-        $this->middleware('web', ProtectAgainstSpam::class);
+        $this->middleware(['web', ProtectAgainstSpam::class]);
 
         if (config('comments.guest_commenting') == true) {
             $this->middleware('auth')->except('store');
