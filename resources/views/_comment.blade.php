@@ -89,7 +89,7 @@
         <br />{{-- Margin bottom --}}
 
         {{-- Recursion for children --}}
-        @if(array_key_exists($comment->id, $grouped_comments->toArray()))
+        @if($grouped_comments->has($comment->id))
             @foreach($grouped_comments[$comment->id] as $child)
                 @include('comments::_comment', [
                     'comment' => $child,
