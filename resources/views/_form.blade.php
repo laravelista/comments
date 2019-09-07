@@ -12,6 +12,7 @@
         @endif
         <form method="POST" action="{{ url('comments') }}">
             @csrf
+            @honeypot
             <input type="hidden" name="commentable_type" value="\{{ get_class($model) }}" />
             <input type="hidden" name="commentable_id" value="{{ $model->id }}" />
 

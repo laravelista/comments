@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Spatie\Honeypot\ProtectAgainstSpam;
 
 class CommentController extends Controller implements CommentControllerInterface
 {
@@ -13,7 +14,7 @@ class CommentController extends Controller implements CommentControllerInterface
 
     public function __construct()
     {
-        $this->middleware('web');
+        $this->middleware(['web', ProtectAgainstSpam::class]);
 
         if (config('comments.guest_commenting') == true) {
             $this->middleware('auth')->except('store');
