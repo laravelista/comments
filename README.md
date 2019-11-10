@@ -57,7 +57,7 @@ I plan to expand this chapter with more tutorials and articles. If you write som
 
 **Screencasts:**
 
-- [Adding comments to your Laravel app using this package [YouTube link]](https://www.youtube.com/watch?v=YhA0CSX1HIg) by Andre Madarang.
+- [Adding comments to your Laravel application](https://www.youtube.com/watch?v=YhA0CSX1HIg) by Andre Madarang.
 
 ## Installation
 
