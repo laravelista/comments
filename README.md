@@ -55,9 +55,9 @@ Two comments from different users:
 
 I plan to expand this chapter with more tutorials and articles. If you write something about this package let me know, so that I can update this chapter.
 
-**Articles:**
+**Screencasts:**
 
-- [Laravelista: Comments preview (Outdated)](https://laravelista.com/posts/comments-preview)
+- [Adding comments to your Laravel app using this package - YouTube](https://www.youtube.com/watch?v=YhA0CSX1HIg) by Andre Madarang.
 
 ## Installation
 
