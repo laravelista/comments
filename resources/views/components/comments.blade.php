@@ -17,9 +17,22 @@
         if (isset($perPage)) {
             $page = request()->query('page', 1) - 1;
 
+            $parentComments = $comments->where('child_id', '');
+
+            $slicedParentComments = $parentComments->slice($page * $perPage, $perPage);
+
+            $slicedParentCommentsIds = $slicedParentComments->pluck('id')->toArray();
+
+            $comments = $comments
+                // Remove parent Comments from comments
+                ->whereNotIn('id', $slicedParentCommentsIds)
+                // Keep only comments that are related to spliced parent comments.
+                // This maybe improves performance?
+                ->whereIn('child_id', $slicedParentCommentsIds);
+
             $grouped_comments = new \Illuminate\Pagination\LengthAwarePaginator(
-                $comments->slice($page * $perPage, $perPage)->groupBy('child_id'),
-                $comments->count(),
+                $slicedParentComments->merge($comments)->groupBy('child_id'),
+                $parentComments->count(),
                 $perPage
             );
 
