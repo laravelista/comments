@@ -12,7 +12,34 @@
 
 <ul class="list-unstyled">
     @php
-        $grouped_comments = $comments->sortBy('created_at')->groupBy('child_id');
+        $comments = $comments->sortBy('created_at');
+
+        if (isset($perPage)) {
+            $page = request()->query('page', 1) - 1;
+
+            $parentComments = $comments->where('child_id', '');
+
+            $slicedParentComments = $parentComments->slice($page * $perPage, $perPage);
+
+            $slicedParentCommentsIds = $slicedParentComments->pluck('id')->toArray();
+
+            $comments = $comments
+                // Remove parent Comments from comments
+                ->whereNotIn('id', $slicedParentCommentsIds)
+                // Keep only comments that are related to spliced parent comments.
+                // This maybe improves performance?
+                ->whereIn('child_id', $slicedParentCommentsIds);
+
+            $grouped_comments = new \Illuminate\Pagination\LengthAwarePaginator(
+                $slicedParentComments->merge($comments)->groupBy('child_id'),
+                $parentComments->count(),
+                $perPage
+            );
+
+            $grouped_comments->withPath(request()->path());
+        } else {
+            $grouped_comments = $comments->groupBy('child_id');
+        }
     @endphp
     @foreach($grouped_comments as $comment_id => $comments)
         {{-- Process parent nodes --}}
@@ -26,6 +53,10 @@
         @endif
     @endforeach
 </ul>
+
+@isset ($perPage)
+    {{ $grouped_comments->links() }}
+@endisset
 
 @auth
     @include('comments::_form')

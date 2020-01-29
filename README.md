@@ -26,6 +26,7 @@ All comments are stored in a single table with a polymorphic relation for conten
 - [x] **Solved N+1 query problem**
 - [x] **Comment approval (opt-in)**
 - [x] **Guest commenting**
+- [x] **Pagination** [New]
 
 ### Screenshots
 
@@ -147,6 +148,23 @@ To view only approved comments, use this code:
     'approved' => true
 ])
 ```
+
+### Paginate comments
+
+Pagination paginates by top level comments only, meaning that if you specify the number of comments per page to be 1, and that one comment has 100 replies, it will display that one comment and all of its replies.
+
+It was not possible to do it any other way, because if I paginate by all comments (parent and child) you will end up with blank pages since the comments components loops parent comments first and then uses recursion for replies.
+
+To use pagination, use this code:
+
+```
+@comments([
+    'model' => $user,
+    'perPage' => 2
+])
+```
+
+Replace `2` with any number you want.
 
 ## Events
 
