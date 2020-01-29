@@ -12,7 +12,21 @@
 
 <ul class="list-unstyled">
     @php
-        $grouped_comments = $comments->sortBy('created_at')->groupBy('child_id');
+        $comments = $comments->sortBy('created_at');
+
+        if (isset($perPage)) {
+            $page = request()->query('page', 1) - 1;
+
+            $grouped_comments = new \Illuminate\Pagination\LengthAwarePaginator(
+                $comments->slice($page * $perPage, $perPage)->groupBy('child_id'),
+                $comments->count(),
+                $perPage
+            );
+
+            $grouped_comments->withPath(request()->path());
+        } else {
+            $grouped_comments = $comments->groupBy('child_id');
+        }
     @endphp
     @foreach($grouped_comments as $comment_id => $comments)
         {{-- Process parent nodes --}}
@@ -26,6 +40,10 @@
         @endif
     @endforeach
 </ul>
+
+@isset ($perPage)
+    {{ $grouped_comments->links() }}
+@endisset
 
 @auth
     @include('comments::_form')
