@@ -19,8 +19,8 @@
                 <button data-toggle="modal" data-target="#comment-modal-{{ $comment->id }}" class="btn btn-sm btn-link text-uppercase">Edit</button>
             @endcan
             @can('delete-comment', $comment)
-                <a href="{{ url('comments/' . $comment->id) }}" onclick="event.preventDefault();document.getElementById('comment-delete-form-{{ $comment->id }}').submit();" class="btn btn-sm btn-link text-danger text-uppercase">Delete</a>
-                <form id="comment-delete-form-{{ $comment->id }}" action="{{ url('comments/' . $comment->id) }}" method="POST" style="display: none;">
+                <a href="{{ route('comments.destroy', $comment->id) }}" onclick="event.preventDefault();document.getElementById('comment-delete-form-{{ $comment->id }}').submit();" class="btn btn-sm btn-link text-danger text-uppercase">Delete</a>
+                <form id="comment-delete-form-{{ $comment->id }}" action="{{ route('comments.destroy', $comment->id) }}" method="POST" style="display: none;">
                     @method('DELETE')
                     @csrf
                 </form>
@@ -31,7 +31,7 @@
             <div class="modal fade" id="comment-modal-{{ $comment->id }}" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form method="POST" action="{{ url('comments/' . $comment->id) }}">
+                        <form method="POST" action="{{ route('comments.update', $comment->id) }}">
                             @method('PUT')
                             @csrf
                             <div class="modal-header">
@@ -61,7 +61,7 @@
             <div class="modal fade" id="reply-modal-{{ $comment->id }}" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form method="POST" action="{{ url('comments/' . $comment->id) }}">
+                        <form method="POST" action="{{ route('comments.reply', $comment->id) }}">
                             @csrf
                             <div class="modal-header">
                                 <h5 class="modal-title">Reply to Comment</h5>
