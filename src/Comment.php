@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Laravelista\Comments\Events\CommentCreated;
 use Laravelista\Comments\Events\CommentUpdated;
 use Laravelista\Comments\Events\CommentDeleted;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
+	use SoftDeletes;
+
     /**
      * The relations to eager load on every query.
      *
