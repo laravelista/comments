@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::post('comments', config('comments.controller') . '@store')->name('comments.store');
 Route::delete('comments/{comment}', config('comments.controller') . '@destroy')->name('comments.destroy');
 Route::put('comments/{comment}', config('comments.controller') . '@update')->name('comments.update');
