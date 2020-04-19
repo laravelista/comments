@@ -29,6 +29,7 @@ All comments are stored in a single table with a polymorphic relation for conten
 - [x] **Comment approval (opt-in)**
 - [x] **Guest commenting**
 - [x] **Pagination** [New]
+- [x] **Soft deletes** [New]
 
 
 ### Screenshots
