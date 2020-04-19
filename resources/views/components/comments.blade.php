@@ -60,7 +60,7 @@
 
 @auth
     @include('comments::_form')
-@elseif(config('comments.guest_commenting') == true)
+@elseif(Config::get('comments.guest_commenting') == true)
     @include('comments::_form', [
         'guest_commenting' => true
     ])

@@ -2,9 +2,11 @@
 
 namespace Laravelista\Comments;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;
 
 class ServiceProvider extends LaravelServiceProvider
@@ -16,7 +18,7 @@ class ServiceProvider extends LaravelServiceProvider
      */
     protected function loadRoutes()
     {
-        if (config('comments.routes') === true) {
+        if (Config::get('comments.routes') === true) {
             $this->loadRoutesFrom(__DIR__ . '/routes.php');
         }
     }
@@ -34,7 +36,7 @@ class ServiceProvider extends LaravelServiceProvider
      */
     protected function definePermissions()
     {
-        foreach(config('comments.permissions') as $permission => $policy) {
+        foreach(Config::get('comments.permissions') as $permission => $policy) {
             Gate::define($permission, $policy);
         }
     }
@@ -52,18 +54,18 @@ class ServiceProvider extends LaravelServiceProvider
         $this->definePermissions();
 
         $this->publishes([
-            __DIR__.'/../migrations/' => database_path('migrations')
+            __DIR__.'/../migrations/' => App::databasePath('migrations')
         ], 'migrations');
 
         $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/comments'),
+            __DIR__ . '/../resources/views' => App::resourcePath('views/vendor/comments'),
         ], 'views');
 
         $this->publishes([
-            __DIR__ . '/../config/comments.php' => config_path('comments.php'),
+            __DIR__ . '/../config/comments.php' => App::configPath('comments.php'),
         ], 'config');
 
-        Route::model('comment', config('comments.model'));
+        Route::model('comment', Config::get('comments.model'));
     }
 
     public function register()
