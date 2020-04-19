@@ -17,14 +17,18 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $with = ['commenter'];
+    protected $with = [
+        'commenter'
+    ];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['comment', 'approved', 'guest_name', 'guest_email'];
+    protected $fillable = [
+        'comment', 'approved', 'guest_name', 'guest_email'
+    ];
 
     /**
      * The attributes that should be cast to native types.
