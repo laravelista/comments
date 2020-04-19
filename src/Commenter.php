@@ -2,6 +2,8 @@
 
 namespace Laravelista\Comments;
 
+use Illuminate\Support\Facades\Config;
+
 /**
  * Add this trait to your User model so
  * that you can retrieve the comments for a user.
@@ -13,7 +15,7 @@ trait Commenter
      */
     public function comments()
     {
-        return $this->morphMany(config('comments.model'), 'commenter');
+        return $this->morphMany(Config::get('comments.model'), 'commenter');
     }
 
     /**
@@ -21,6 +23,6 @@ trait Commenter
      */
     public function approvedComments()
     {
-        return $this->morphMany(config('comments.model'), 'commenter')->where('approved', true);
+        return $this->morphMany(Config::get('comments.model'), 'commenter')->where('approved', true);
     }
 }

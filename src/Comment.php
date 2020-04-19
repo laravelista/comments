@@ -7,6 +7,7 @@ use Laravelista\Comments\Events\CommentCreated;
 use Laravelista\Comments\Events\CommentUpdated;
 use Laravelista\Comments\Events\CommentDeleted;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Config;
 
 class Comment extends Model
 {
@@ -71,7 +72,7 @@ class Comment extends Model
      */
     public function children()
     {
-        return $this->hasMany(config('comments.model'), 'child_id');
+        return $this->hasMany(Config::get('comments.model'), 'child_id');
     }
 
     /**
@@ -79,6 +80,6 @@ class Comment extends Model
      */
     public function parent()
     {
-        return $this->belongsTo(config('comments.model'), 'child_id');
+        return $this->belongsTo(Config::get('comments.model'), 'child_id');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Laravelista\Comments;
 
+use Illuminate\Support\Facades\Config;
+
 /**
  * Add this trait to any model that you want to be able to
  * comment upon or get comments for.
@@ -27,7 +29,7 @@ trait Commentable
      */
     public function comments()
     {
-        return $this->morphMany(config('comments.model'), 'commentable');
+        return $this->morphMany(Config::get('comments.model'), 'commentable');
     }
 
     /**
@@ -35,6 +37,6 @@ trait Commentable
      */
     public function approvedComments()
     {
-        return $this->morphMany(config('comments.model'), 'commentable')->where('approved', true);
+        return $this->morphMany(Config::get('comments.model'), 'commentable')->where('approved', true);
     }
 }
