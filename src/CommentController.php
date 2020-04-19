@@ -94,7 +94,12 @@ class CommentController extends Controller implements CommentControllerInterface
     {
         $this->authorize('delete-comment', $comment);
 
-        $comment->delete();
+        if (config('comments.soft_deletes') == true) {
+			$comment->delete();
+		}
+		else {
+			$comment->forceDelete();
+		}
 
         return redirect()->back();
     }
