@@ -2,12 +2,12 @@
     <div class="card-body">
         @if($errors->has('commentable_type'))
             <div class="alert alert-danger" role="alert">
-                {{ $errors->get('commentable_type') }}
+                {{ $errors->first('commentable_type') }}
             </div>
         @endif
         @if($errors->has('commentable_id'))
             <div class="alert alert-danger" role="alert">
-                {{ $errors->get('commentable_id') }}
+                {{ $errors->first('commentable_id') }}
             </div>
         @endif
         <form method="POST" action="{{ route('comments.store') }}">
