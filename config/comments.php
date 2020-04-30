@@ -64,6 +64,6 @@ return [
      *
      * Comments will be soft deleted using laravels "softDeletes" trait.
      */
-    'soft_deletes' => true
+    'soft_deletes' => false
 
 ];
