@@ -21,11 +21,11 @@
 
             $slicedParentComments = $parentComments->slice($page * $perPage, $perPage);
 
-            $slicedParentCommentsIds = $slicedParentComments->pluck('id')->toArray();
+            $slicedParentCommentsIds = $slicedParentComments->pluck(Comment::getKeyName())->toArray();
 
             $comments = $comments
                 // Remove parent Comments from comments
-                ->whereNotIn('id', $slicedParentCommentsIds)
+                ->whereNotIn(Comment::getKeyName(), $slicedParentCommentsIds)
                 // Keep only comments that are related to spliced parent comments.
                 // This maybe improves performance?
                 ->whereIn('child_id', $slicedParentCommentsIds);

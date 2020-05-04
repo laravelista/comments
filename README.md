@@ -27,9 +27,10 @@ All comments are stored in a single table with a polymorphic relation for conten
 - [x] **Support for multiple User models**
 - [x] **Solved N+1 query problem**
 - [x] **Comment approval (opt-in)**
-- [x] **Guest commenting**
-- [x] **Pagination** [New]
-- [x] **Soft deletes** [New]
+- [x] **Guest commenting (opt-in)**
+- [x] **Pagination (opt-in)**
+- [x] **Soft deletes (opt-in)**
+- [x] **Works with custom ID columns** [New]
 
 
 ### Screenshots
