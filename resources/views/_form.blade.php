@@ -14,7 +14,7 @@
             @csrf
             @honeypot
             <input type="hidden" name="commentable_type" value="\{{ get_class($model) }}" />
-            <input type="hidden" name="commentable_id" value="{{ $model->id }}" />
+            <input type="hidden" name="commentable_id" value="{{ $model->getKey() }}" />
 
             {{-- Guest commenting --}}
             @if(isset($guest_commenting) and $guest_commenting == true)

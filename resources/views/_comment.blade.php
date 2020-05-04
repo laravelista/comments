@@ -2,9 +2,9 @@
 @php($markdown->setSafeMode(true))
 
 @if(isset($reply) && $reply === true)
-  <div id="comment-{{ $comment->id }}" class="media">
+  <div id="comment-{{ $comment->getKey() }}" class="media">
 @else
-  <li id="comment-{{ $comment->id }}" class="media">
+  <li id="comment-{{ $comment->getKey() }}" class="media">
 @endif
     <img class="mr-3" src="https://www.gravatar.com/avatar/{{ md5($comment->commenter->email ?? $comment->guest_email) }}.jpg?s=64" alt="{{ $comment->commenter->name ?? $comment->guest_name }} Avatar">
     <div class="media-body">
@@ -13,14 +13,14 @@
 
         <div>
             @can('reply-to-comment', $comment)
-                <button data-toggle="modal" data-target="#reply-modal-{{ $comment->id }}" class="btn btn-sm btn-link text-uppercase">Reply</button>
+                <button data-toggle="modal" data-target="#reply-modal-{{ $comment->getKey() }}" class="btn btn-sm btn-link text-uppercase">Reply</button>
             @endcan
             @can('edit-comment', $comment)
-                <button data-toggle="modal" data-target="#comment-modal-{{ $comment->id }}" class="btn btn-sm btn-link text-uppercase">Edit</button>
+                <button data-toggle="modal" data-target="#comment-modal-{{ $comment->getKey() }}" class="btn btn-sm btn-link text-uppercase">Edit</button>
             @endcan
             @can('delete-comment', $comment)
-                <a href="{{ route('comments.destroy', $comment->id) }}" onclick="event.preventDefault();document.getElementById('comment-delete-form-{{ $comment->id }}').submit();" class="btn btn-sm btn-link text-danger text-uppercase">Delete</a>
-                <form id="comment-delete-form-{{ $comment->id }}" action="{{ route('comments.destroy', $comment->id) }}" method="POST" style="display: none;">
+                <a href="{{ route('comments.destroy', $comment->getKey()) }}" onclick="event.preventDefault();document.getElementById('comment-delete-form-{{ $comment->getKey() }}').submit();" class="btn btn-sm btn-link text-danger text-uppercase">Delete</a>
+                <form id="comment-delete-form-{{ $comment->getKey() }}" action="{{ route('comments.destroy', $comment->getKey()) }}" method="POST" style="display: none;">
                     @method('DELETE')
                     @csrf
                 </form>
@@ -28,10 +28,10 @@
         </div>
 
         @can('edit-comment', $comment)
-            <div class="modal fade" id="comment-modal-{{ $comment->id }}" tabindex="-1" role="dialog">
+            <div class="modal fade" id="comment-modal-{{ $comment->getKey() }}" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form method="POST" action="{{ route('comments.update', $comment->id) }}">
+                        <form method="POST" action="{{ route('comments.update', $comment->getKey()) }}">
                             @method('PUT')
                             @csrf
                             <div class="modal-header">
@@ -58,10 +58,10 @@
         @endcan
 
         @can('reply-to-comment', $comment)
-            <div class="modal fade" id="reply-modal-{{ $comment->id }}" tabindex="-1" role="dialog">
+            <div class="modal fade" id="reply-modal-{{ $comment->getKey() }}" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form method="POST" action="{{ route('comments.reply', $comment->id) }}">
+                        <form method="POST" action="{{ route('comments.reply', $comment->getKey()) }}">
                             @csrf
                             <div class="modal-header">
                                 <h5 class="modal-title">Reply to Comment</h5>
@@ -89,8 +89,8 @@
         <br />{{-- Margin bottom --}}
 
         {{-- Recursion for children --}}
-        @if($grouped_comments->has($comment->id))
-            @foreach($grouped_comments[$comment->id] as $child)
+        @if($grouped_comments->has($comment->getKey()))
+            @foreach($grouped_comments[$comment->getKey()] as $child)
                 @include('comments::_comment', [
                     'comment' => $child,
                     'reply' => true,

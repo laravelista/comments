@@ -68,7 +68,7 @@ class CommentController extends Controller implements CommentControllerInterface
         $comment->approved = !Config::get('comments.approval_required');
         $comment->save();
 
-        return Redirect::to(URL::previous() . '#comment-' . $comment->id);
+        return Redirect::to(URL::previous() . '#comment-' . $comment->getKey());
     }
 
     /**
@@ -86,7 +86,7 @@ class CommentController extends Controller implements CommentControllerInterface
             'comment' => $request->message
         ]);
 
-        return Redirect::to(URL::previous() . '#comment-' . $comment->id);
+        return Redirect::to(URL::previous() . '#comment-' . $comment->getKey());
     }
 
     /**
@@ -126,6 +126,6 @@ class CommentController extends Controller implements CommentControllerInterface
         $reply->approved = !Config::get('comments.approval_required');
         $reply->save();
 
-        return Redirect::to(URL::previous() . '#comment-' . $reply->id);
+        return Redirect::to(URL::previous() . '#comment-' . $reply->getKey());
     }
 }
