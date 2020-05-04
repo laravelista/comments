@@ -36,7 +36,7 @@ class ServiceProvider extends LaravelServiceProvider
      */
     protected function definePermissions()
     {
-        foreach(Config::get('comments.permissions') as $permission => $policy) {
+        foreach(Config::get('comments.permissions', []) as $permission => $policy) {
             Gate::define($permission, $policy);
         }
     }
