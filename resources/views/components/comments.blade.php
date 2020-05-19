@@ -21,14 +21,13 @@
 
             $slicedParentComments = $parentComments->slice($page * $perPage, $perPage);
 
-            $slicedParentCommentsIds = $slicedParentComments->pluck(Comment::getKeyName())->toArray();
+            $m = Config::get('comments.model'); // This has to be done like this, otherwise it will complain.
+            $modelKeyName = (new $m)->getKeyName(); // This defaults to 'id' if not changed.
 
-            $comments = $comments
-                // Remove parent Comments from comments
-                ->whereNotIn(Comment::getKeyName(), $slicedParentCommentsIds)
-                // Keep only comments that are related to spliced parent comments.
-                // This maybe improves performance?
-                ->whereIn('child_id', $slicedParentCommentsIds);
+            $slicedParentCommentsIds = $slicedParentComments->pluck($modelKeyName)->toArray();
+
+            // Remove parent Comments from comments.
+            $comments = $comments->where('child_id', '!=', '');
 
             $grouped_comments = new \Illuminate\Pagination\LengthAwarePaginator(
                 $slicedParentComments->merge($comments)->groupBy('child_id'),
