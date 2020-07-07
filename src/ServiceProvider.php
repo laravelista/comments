@@ -24,6 +24,18 @@ class ServiceProvider extends LaravelServiceProvider
     }
 
     /**
+     * If load_migrations config is true (by default it is),
+     * then load the package migrations, otherwise don't load
+     * the migrations.
+     */
+    protected function loadMigrations()
+    {
+        if (Config::get('comments.load_migrations') === true) {
+            $this->loadMigrationsFrom(__DIR__ . '/../migrations');
+        }
+    }
+
+    /**
      * If for some reason you want to override the component.
      */
     protected function includeBladeComponent()
@@ -45,7 +57,7 @@ class ServiceProvider extends LaravelServiceProvider
     {
         $this->loadRoutes();
 
-        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
+        $this->loadMigrations();
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'comments');
 
