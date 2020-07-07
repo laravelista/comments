@@ -70,6 +70,6 @@ return [
      * Enable/disable the package provider to load migrations.
      * This option might be useful if you use multiple database connections.
      */
-    'load_migrations' => false,
+    'load_migrations' => true,
 
 ];
