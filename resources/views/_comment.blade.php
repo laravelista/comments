@@ -1,11 +1,7 @@
 @inject('markdown', 'Parsedown')
 @php($markdown->setSafeMode(true))
 
-@if(isset($reply) && $reply === true)
-  <div id="comment-{{ $comment->getKey() }}" class="media">
-@else
-  <li id="comment-{{ $comment->getKey() }}" class="media">
-@endif
+<div id="comment-{{ $comment->getKey() }}" class="media">
     <img class="mr-3" src="https://www.gravatar.com/avatar/{{ md5($comment->commenter->email ?? $comment->guest_email) }}.jpg?s=64" alt="{{ $comment->commenter->name ?? $comment->guest_name }} Avatar">
     <div class="media-body">
         <h5 class="mt-0 mb-1">{{ $comment->commenter->name ?? $comment->guest_name }} <small class="text-muted">- {{ $comment->created_at->diffForHumans() }}</small></h5>
@@ -88,20 +84,33 @@
 
         <br />{{-- Margin bottom --}}
 
+        <?php
+            if (!isset($indentationLevel)) {
+                $indentationLevel = 1;
+            } else {
+                $indentationLevel++;
+            }
+        ?>
+
         {{-- Recursion for children --}}
-        @if($grouped_comments->has($comment->getKey()))
+        @if($grouped_comments->has($comment->getKey()) && $indentationLevel <= $maxIndentationLevel)
             @foreach($grouped_comments[$comment->getKey()] as $child)
                 @include('comments::_comment', [
                     'comment' => $child,
-                    'reply' => true,
                     'grouped_comments' => $grouped_comments
                 ])
             @endforeach
         @endif
 
     </div>
-@if(isset($reply) && $reply === true)
-  </div>
-@else
-  </li>
+</div>
+
+{{-- Recursion for children --}}
+@if($grouped_comments->has($comment->getKey()) && $indentationLevel > $maxIndentationLevel)
+    @foreach($grouped_comments[$comment->getKey()] as $child)
+        @include('comments::_comment', [
+            'comment' => $child,
+            'grouped_comments' => $grouped_comments
+        ])
+    @endforeach
 @endif

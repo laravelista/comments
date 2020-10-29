@@ -32,6 +32,7 @@ All comments are stored in a single table with a polymorphic relation for conten
 - Soft deletes (opt-in)
 - Works with custom ID columns
 - Optionally load package migrations [NEW]
+- Configure maximum indentation level [NEW]
 
 
 ### Screenshots
@@ -182,6 +183,26 @@ To use pagination, use this code:
 ```
 
 Replace `2` with any number you want.
+
+### Configure maximum indentation level
+
+By default the replies go up to level three. After that they are "mashed" at that level.
+
+```
+- 0
+    - 1
+        - 2
+            - 3
+```
+
+You can configure the maximum indentation level like so:
+
+```
+@comments([
+    'model' => $user,
+    'maxIndentationLevel' => 1
+])
+```
 
 
 ## Events
