@@ -30,7 +30,7 @@ All comments are stored in a single table with a polymorphic relation for conten
 - [x] **Guest commenting (opt-in)**
 - [x] **Pagination (opt-in)**
 - [x] **Soft deletes (opt-in)**
-- [x] **Works with custom ID columns** [New]
+- [x] **Works with custom ID columns**
 
 
 ### Screenshots
