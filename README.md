@@ -14,23 +14,24 @@ All comments are stored in a single table with a polymorphic relation for conten
 
 ### Features
 
-- [x] View comments
-- [x] Create comments
-- [x] Delete comments
-- [x] Edit comments
-- [x] **Reply to comments**
-- [x] **Authorization rules**
-- [x] **Support localization**
-- [x] **Dispatch events**
-- [x] **Route, Controller, Comment, Migration & View customizations**
-- [x] **Support for non-integer IDs**
-- [x] **Support for multiple User models**
-- [x] **Solved N+1 query problem**
-- [x] **Comment approval (opt-in)**
-- [x] **Guest commenting (opt-in)**
-- [x] **Pagination (opt-in)**
-- [x] **Soft deletes (opt-in)**
-- [x] **Works with custom ID columns**
+- View comments
+- Create comments
+- Delete comments
+- Edit comments
+- Reply to comments
+- Authorization rules
+- Support localization
+- Dispatch events
+- Route, Controller, Comment, Migration & View customizations
+- Support for non-integer IDs
+- Support for multiple User models
+- Solved N+1 query problem
+- Comment approval (opt-in)
+- Guest commenting (opt-in)
+- Pagination (opt-in)
+- Soft deletes (opt-in)
+- Works with custom ID columns
+- Optionally load package migrations [NEW]
 
 
 ### Screenshots
