@@ -10,7 +10,7 @@
     <div class="alert alert-warning">There are no comments yet.</div>
 @endif
 
-<ul class="list-unstyled">
+<div>
     @php
         $comments = $comments->sortBy('created_at');
 
@@ -46,12 +46,13 @@
             @foreach($comments as $comment)
                 @include('comments::_comment', [
                     'comment' => $comment,
-                    'grouped_comments' => $grouped_comments
+                    'grouped_comments' => $grouped_comments,
+                    'maxIndentationLevel' => $maxIndentationLevel ?? 3
                 ])
             @endforeach
         @endif
     @endforeach
-</ul>
+</div>
 
 @isset ($perPage)
     {{ $grouped_comments->links() }}
