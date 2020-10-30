@@ -142,6 +142,15 @@ php artisan vendor:publish --provider="Laravelista\Comments\ServiceProvider" --t
 ```
 
 
+### Publish translations (customization)
+
+The package currently only supports English, but I am open to PRs for other languages.
+
+```bash
+php artisan vendor:publish --provider="Laravelista\Comments\ServiceProvider" --tag=translations
+```
+
+
 ## Usage
 
 In the view where you want to display comments, place this code and modify it:

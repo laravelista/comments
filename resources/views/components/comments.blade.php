@@ -7,7 +7,7 @@
 @endphp
 
 @if($comments->count() < 1)
-    <div class="alert alert-warning">There are no comments yet.</div>
+    <div class="alert alert-warning">@lang('comments::comments.there_are_no_comments')</div>
 @endif
 
 <div>
@@ -67,9 +67,9 @@
 @else
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Authentication required</h5>
-            <p class="card-text">You must log in to post a comment.</p>
-            <a href="{{ route('login') }}" class="btn btn-primary">Log in</a>
+            <h5 class="card-title">@lang('comments::comments.authentication_required')</h5>
+            <p class="card-text">@lang('comments::comments.you_must_login_to_post_a_comment')</p>
+            <a href="{{ route('login') }}" class="btn btn-primary">@lang('comments::comments.log_in')</a>
         </div>
     </div>
 @endauth
