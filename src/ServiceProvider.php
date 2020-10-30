@@ -62,6 +62,8 @@ class ServiceProvider extends LaravelServiceProvider
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'comments');
 
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'comments');
+
         $this->includeBladeComponent();
 
         $this->definePermissions();
@@ -77,6 +79,10 @@ class ServiceProvider extends LaravelServiceProvider
         $this->publishes([
             __DIR__ . '/../config/comments.php' => App::configPath('comments.php'),
         ], 'config');
+
+        $this->publishes([
+            __DIR__ . '/../resources/lang' => App::resourcePath('lang/vendor/comments'),
+        ], 'translations');
 
         Route::model('comment', Config::get('comments.model'));
 
