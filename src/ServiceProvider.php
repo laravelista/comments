@@ -2,6 +2,7 @@
 
 namespace Laravelista\Comments;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
@@ -78,6 +79,8 @@ class ServiceProvider extends LaravelServiceProvider
         ], 'config');
 
         Route::model('comment', Config::get('comments.model'));
+
+        Paginator::useBootstrap();
     }
 
     public function register()
