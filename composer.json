@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
         "erusev/parsedown": "^1.7",
         "illuminate/database": "^8.0",
         "illuminate/http": "^8.0",
