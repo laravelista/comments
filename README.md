@@ -228,10 +228,10 @@ This package fires events to let you know when things happen.
 To change the controller or the routes, see the config.
 
 ```
-Route::post('comments', '\Laravelista\Comments\CommentController@store');
-Route::delete('comments/{comment}', '\Laravelista\Comments\CommentController@destroy');
-Route::put('comments/{comment}', '\Laravelista\Comments\CommentController@update');
-Route::post('comments/{comment}', '\Laravelista\Comments\CommentController@reply');
+Route::post('comments', '\Laravelista\Comments\CommentController@store')->name('comments.store');
+Route::delete('comments/{comment}', '\Laravelista\Comments\CommentController@destroy')->name('comments.destroy');
+Route::put('comments/{comment}', '\Laravelista\Comments\CommentController@update')->name('comments.update');
+Route::post('comments/{comment}', '\Laravelista\Comments\CommentController@reply')->name('comments.reply');
 ```
 
 
