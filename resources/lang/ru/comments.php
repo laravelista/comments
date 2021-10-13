@@ -13,7 +13,6 @@ return [
     'update' => 'Отредактировать',
     'cancel' => 'Отменить',
     'reply_to_comment' => 'Ответ на комментарий',
-    'enter_your_message_here' => 'Введите свое сообщение здесь:',
     'markdown_cheatsheet' => '<a target="_blank" href=":url">Markdown</a> разметка',
     'submit' => 'Отправить',
     'your_message_is_required' => 'Поле обязательно для заполнения.',
