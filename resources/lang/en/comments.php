@@ -13,7 +13,6 @@ return [
     'update' => 'Update',
     'cancel' => 'Cancel',
     'reply_to_comment' => 'Reply to comment',
-    'enter_your_message_here' => 'Enter your message here:',
     'markdown_cheatsheet' => '<a target="_blank" href=":url">Markdown</a> cheatsheet.',
     'submit' => 'Submit',
     'your_message_is_required' => 'Your message is required.',
