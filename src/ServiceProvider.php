@@ -86,7 +86,7 @@ class ServiceProvider extends LaravelServiceProvider
 
         Route::model('comment', Config::get('comments.model'));
 
-        if (Config::get('comments.paginator_use_bootstrap')) {
+        if (Config::get('comments.paginator_use_bootstrap', true)) {
             Paginator::useBootstrap();
         }
     }
