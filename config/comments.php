@@ -72,4 +72,10 @@ return [
      */
     'load_migrations' => true,
 
+    /**
+     * Enable/disable calling Paginator::useBootstrap() in the boot method
+     * to prevent breaking non bootstrap based Site.
+     */
+    'paginator_use_bootstrap' => true,
+
 ];
