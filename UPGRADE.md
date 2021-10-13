@@ -2,6 +2,10 @@
 
 Be sure to update your version of the config file to match the latest version of the package.
 
+## TODO
+
+- [ ] document new config option `use_bootstrap_pagination`.
+
 
 ## Support for soft deletes (`3.4.0`)
 
