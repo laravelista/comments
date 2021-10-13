@@ -4,7 +4,7 @@ Be sure to update your version of the config file to match the latest version of
 
 ## TODO
 
-- [ ] document new config option `use_bootstrap_pagination`.
+- [ ] document new config option `paginator_use_bootstrap`.
 
 
 ## Support for soft deletes (`3.4.0`)
