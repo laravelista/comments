@@ -23,9 +23,10 @@ return [
     /**
      * The Comment Controller.
      * Change this to your own implementation of the CommentController.
-     * You can use the \Laravelista\Comments\CommentControllerInterface.
+     * You can use the \Laravelista\Comments\CommentControllerInterface
+     * or extend the \Laravelista\Comments\CommentController.
      */
-    'controller' => '\Laravelista\Comments\CommentController',
+    'controller' => '\Laravelista\Comments\WebCommentController',
 
     /**
      * Disable/enable the package routes.
