@@ -1,7 +1,24 @@
 @php
-    if (isset($approved) and $approved == true) {
+    $approved = (isset($approved) && $approved == true);
+    $withTrashed = isset($withTrashed) and $withTrashed == true;
+    $approvedAndTrashed = $approved && $withTrashed;
+    $notApprovedAndTrashed = !$approved && $withTrashed;
+    $notApprovedAndNotTrashed = !$approved && !$withTrashed;
+    $approvedAndNotTrashed = $approved && !$withTrashed;
+
+    if ($notApprovedAndTrashed) {
+        $comments = $model->comments()->withTrashed()->get();
+    }
+
+    if ($approvedAndTrashed) {
+        $comments = $model->approvedComments()->withTrashed()->get();
+    }
+
+    if($approvedAndNotTrashed){
         $comments = $model->approvedComments;
-    } else {
+    }
+
+    if($notApprovedAndNotTrashed){
         $comments = $model->comments;
     }
 @endphp
