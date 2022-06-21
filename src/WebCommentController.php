@@ -15,8 +15,6 @@ class WebCommentController extends CommentController
     ) {
         parent::__construct();
 
-        $this->middleware('web');
-
         $this->commentService = $commentService;
     }
 
