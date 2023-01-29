@@ -37,6 +37,6 @@ trait Commentable
      */
     public function approvedComments(bool $approved=true)
     {
-        return $this->morphMany(Config::get('comments.model'), 'commentable')->where('approved', $approved);
+        return $this->comments()->where('approved', $approved);
     }
 }
