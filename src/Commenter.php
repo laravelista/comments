@@ -21,8 +21,8 @@ trait Commenter
     /**
      * Returns only approved comments that this user has made.
      */
-    public function approvedComments()
+    public function approvedComments(bool $approved = true)
     {
-        return $this->morphMany(Config::get('comments.model'), 'commenter')->where('approved', true);
+        return $this->morphMany(Config::get('comments.model'), 'commenter')->where('approved', $approved);
     }
 }
