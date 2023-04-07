@@ -1,5 +1,5 @@
 {
-    "name": "laravelista/comments",
+    "name": "robbielove/laravel-comments",
     "description": "Comments for Laravel.",
     "keywords": [
         "laravel",
@@ -23,6 +23,9 @@
         "illuminate/queue": "^10.0",
         "illuminate/support": "^10.0",
         "spatie/laravel-honeypot": "^4.3"
+    },
+    "replace": {
+        "laravelista/comments": "self.version"
     },
     "autoload": {
         "psr-4": {
